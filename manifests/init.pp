@@ -41,6 +41,7 @@
 #
 #  class { influxdb:
 #    package_version  => '0.9.2',
+#    graphite_enabled => true,
 #  }
 #
 # === Authors
