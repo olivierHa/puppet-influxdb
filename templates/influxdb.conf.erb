@@ -1,0 +1,216 @@
+### Welcome to the InfluxDB configuration file.
+
+# Once every 24 hours InfluxDB will report anonymous data to m.influxdb.com
+# The data includes raft id (random 8 bytes), os, arch, version, and metadata.
+# We don't track ip addresses of servers reporting. This is only used
+# to track the number of instances running and the versions, which
+# is very helpful for us.
+# Change this option to true to disable reporting.
+reporting-disabled = <%= scope.lookupvar('influxdb::reporting_disabled') %>
+
+###
+### [meta]
+###
+### Controls the parameters for the Raft consensus group that stores metadata
+### about the InfluxDB cluster.
+###
+
+[meta]
+  dir = "<%= @meta_dir %>"
+  hostname = "<%= scope.lookupvar('influxdb::meta_influxdb_hostname') %>"
+  bind-address = "<%= scope.lookupvar('influxdb::meta_bind_address') %>"
+  retention-autocreate = <%= scope.lookupvar('influxdb::meta_retention_autocreate') %>
+  election-timeout = "<%= scope.lookupvar('influxdb::meta_election_timeout') %>"
+  heartbeat-timeout = "<%= scope.lookupvar('influxdb::meta_heartbeat_timeout') %>"
+  leader-lease-timeout = "<%= scope.lookupvar('influxdb::meta_leader_lease_timeout') %>"
+  commit-timeout = "<%= scope.lookupvar('influxdb::meta_commit_timeout') %>"
+
+###
+### [data]
+###
+### Controls where the actual shard data for InfluxDB lives and how it is
+### flushed from the WAL. "dir" may need to be changed to a suitable place
+### for your system, but the WAL settings are an advanced configuration. The
+### defaults should work for most systems.
+###
+
+[data]
+  dir = "<%= @data_dir %>"
+  max-wal-size = <%= scope.lookupvar('influxdb::data_max_wal_size') %> # Maximum size the WAL can reach before a flush. Defaults to 100MB.
+  wal-flush-interval = "<%= scope.lookupvar('influxdb::data_wal_flush_interval') %>"  # Maximum time data can sit in WAL before a flush.
+  wal-partition-flush-delay = "<%= scope.lookupvar('influxdb::data_wal_partition_flush_delay') %>" # The delay time between each WAL partition being flushed.
+
+###
+### [cluster]
+###
+### Controls non-Raft cluster behavior, which generally includes how data is
+### shared across shards.
+###
+
+[cluster]
+  shard-writer-timeout = "<%= scope.lookupvar('influxdb::cluster_shard_writer_timeout') %>"
+  write-timeout = "<%= scope.lookupvar('influxdb::cluster_write_timeout') %>"
+
+###
+### [retention]
+###
+### Controls the enforcement of retention policies for evicting old data.
+###
+
+[retention]
+  enabled = <%= scope.lookupvar('influxdb::retention_enabled') %>
+  check-interval = "<%= scope.lookupvar('influxdb::retention_check_interval') %>"
+
+###
+### [admin]
+###
+### Controls the availability of the built-in, web-based admin interface.
+###
+
+<% if @admin_port -%>
+[admin]
+port = <%= @admin_port %>
+<% end -%>
+
+[admin]
+  enabled = true
+  bind-address = ":8083"
+
+###
+### [http]
+###
+### Controls how the HTTP endpoints are configured. These are the primary
+### mechanism for getting data into and out of InfluxDB.
+###
+
+[http]
+  enabled = true
+  bind-address = ":8086"
+  auth-enabled = false
+  log-enabled = true
+  write-tracing = false
+  pprof-enabled = false
+
+###
+### [[graphite]]
+###
+### Controls one or many listeners for Graphite data.
+###
+
+[[graphite]]
+  enabled = <%= scope.lookupvar('influxdb::graphite_enabled') %>
+  database = "<%= scope.lookupvar('influxdb::graphite_graphite') %>"
+  bind-address = "<%= scope.lookupvar('influxdb::graphite_bind_address') %>"
+  protocol = "<%= scope.lookupvar('influxdb::graphite_protocol') %>"
+  consistency-level = "<%= scope.lookupvar('influxdb::graphite_consistency_level') %>"
+  separator = "<%= scope.lookupvar('influxdb::graphite_separator') %>"
+  batch-size = <%= scope.lookupvar('influxdb::graphite_batch_size') %>
+  batch-timeout = "<%= scope.lookupvar('influxdb::graphite_batch_timeout') %>"
+
+  ### Default tags that will be added to all metrics.  These can be overridden at the template level
+  ### or by tags extracted from metric
+   
+  # tags = ["region=us-east", "zone=1c"]
+  <% graphite_tags = scope.lookupvar('influxdb::graphite_tags')
+  if graphite_tags and graphite_tags != [] %>
+  tags = [
+  <% graphite_tags.each do |tag| -%>
+  "<%= tag %>", 
+  ]
+  <% end -%>
+  <% end -%>
+  
+
+  ### Each template line requires a template pattern.  It can have an optional
+  ### filter before the template and separated by spaces.  It can also have optional extra
+  ### tags following the template.  Multiple tags should be separated by commas and no spaces
+  ### similar to the line protocol format.  The can be only one default template.
+  # templates = [
+  #   "*.app env.service.resource.measurement",
+  #   # Default template
+  #   "server.*",
+ #]
+
+<% graphite_template = scope.lookupvar('influxdb::graphite_templates')
+   if graphite_template != [] -%>
+   templates = [ 
+   <% graphite_template.each do |template| -%>
+   "<%= template %>",
+<% end -%>
+   ]
+<% end -%>
+
+
+###
+### [collectd]
+###
+### Controls the listener for collectd data.
+###
+
+[collectd]
+  enabled = false
+  # bind-address = ""
+  # database = ""
+  # typesdb = ""
+
+###
+### [opentsdb]
+###
+### Controls the listener for OpenTSDB data.
+###
+
+[opentsdb]
+  enabled = false
+  # bind-address = ""
+  # database = ""
+  # retention-policy = ""
+
+###
+### [udp]
+###
+### Controls the listener for InfluxDB line protocol data via UDP.
+###
+
+[udp]
+  enabled = false
+  # bind-address = ""
+  # database = ""
+  # batch-size = 0
+  # batch-timeout = "0"
+
+###
+### [monitoring]
+###
+
+[monitoring]
+  enabled = true
+  write-interval = "24h"
+
+###
+### [continuous_queries]
+###
+### Controls how continuous queries are run within InfluxDB.
+###
+
+[continuous_queries]
+  enabled = true
+  recompute-previous-n = 2
+  recompute-no-older-than = "10m"
+  compute-runs-per-interval = 10
+  compute-no-more-than = "2m"
+
+###
+### [hinted-handoff]
+###
+### Controls the hinted handoff feature, which allows nodes to temporarily
+### store queued data when one node of a cluster is down for a short period
+### of time.
+###
+
+[hinted-handoff]
+  enabled = true
+  dir = "<%= @hh_dir %>"
+  max-size = 1073741824
+  max-age = "168h"
+  retry-rate-limit = 0
+  retry-interval = "1s"
