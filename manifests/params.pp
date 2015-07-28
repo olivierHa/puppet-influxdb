@@ -97,7 +97,7 @@ class influxdb::params {
   $hh_max_size = 1073741824
   $hh_max_age = '168h0m0s'
   $hh_retry_rate_limit = 0
-  $hh_retry_interval= '1s' 
+  $hh_retry_interval= '1s'
 
   # continuous_queries Section
   $cqueries_enabled = true

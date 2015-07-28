@@ -129,7 +129,7 @@ class influxdb (
   $cqueries_enabled                   = $influxdb::params::cqueries_enabled,
   $cqueries_recompute_previous_n      = $influxdb::params::cqueries_recompute_previous_n,
   $cqueries_recompute_no_older_than   = $influxdb::params::cqueries_recompute_no_older_than,
-  $cqueries_compute_runs_per_interval = $influxdb::params::cqueries_compute_runs_per_interval, 
+  $cqueries_compute_runs_per_interval = $influxdb::params::cqueries_compute_runs_per_interval,
   $cqueries_compute_no_more_than      = $influxdb::params::cqueries_compute_no_more_than,
 
   # Monitoring Section
