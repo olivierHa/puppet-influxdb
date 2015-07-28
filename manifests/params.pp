@@ -83,9 +83,12 @@ class influxdb::params {
 
   # Collectd Section
   $collectd_enabled = false
-  $collectd_bind_address = ''
-  $collectd_database = ''
-  $collectd_typesdb = ''
+  $collectd_bind_address = ':25826'
+  $collectd_database = 'collectd'
+  $collectd_typesdb = '/usr/share/collectd/types.db'
+  $collectd_batch_size = 5000
+  $collectd_batch_timeout = "10s"
+  $collectd_retention_policy = ''
 
   # hinted-handoff Section
   $hh_enabled = true

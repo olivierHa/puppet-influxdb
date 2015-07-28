@@ -152,6 +152,11 @@ port = <%= @admin_port %>
   bind-address = "<%= scope.lookupvar('influxdb::collectd_bind_address') %>"
   database = "<%= scope.lookupvar('influxdb::collectd_database') %>"
   typesdb = "<%= scope.lookupvar('influxdb::collectd_typesdb') %>"
+  batch_size = <%= scope.lookupvar('influxdb::collectd_batch_size') %>
+  batch-timeout = "<%= scope.lookupvar('influxdb::collectd_batch_timeout') %>"
+  <% if scope.lookupvar('influxdb::collectd_retention_policy') and scope.lookupvar('influxdb::collectd_retention_policy') != '' %>
+  retention-policy = "<%= scope.lookupvar('influxdb::collectd_retention_policy') %>"
+  <% end %>
 
 
 ###

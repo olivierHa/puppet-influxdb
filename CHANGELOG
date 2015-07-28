@@ -1,6 +1,8 @@
+2015-07-28 Release 0.2.0
+- Handle new parameters : collectd, monitoring, Hinted-handoff and Continuous_queries
+
 2015-07-27 Release 0.1.1
 - Better metadata.json for puppetforge
 
 2015-07-27 Release 0.1.0
-- Initial Release (Basic installation and graphite support)
 - Initial Release (Basic installation and graphite support)

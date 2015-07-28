@@ -23,21 +23,30 @@
 # ['graphite_protocol'] - Graphite Protocol
 #                     Defaults to "tcp"
 # ['graphite_database'] - Graphite Database
-#                     Defaults to "graphite"
+#                         Defaults to "graphite"
 # ['graphite_batch_size'] - Graphite batch size
-#                     Defaults to 0
+#                           Defaults to 0
 # ['graphite_batch_timeout'] - Graphite batch timeout
-#                     Defaults to "10s"
+#                              Defaults to "10s"
 # ['graphite_consistency_level'] - Default write consistency for the Graphite input 
-#                     Defaults to "one"
+#                                  Defaults to "one"
 # ['graphite_separator'] - If matching multiple measurement files, this string will be used to join the matched values.
-#                      Defaults to .
+#                          Defaults to .
 # ['graphite_tags'] - Graphite tags
-#                      Defaults to []
+#                     Defaults to []
 # ['graphite_templates'] - Graphite templates 
-#                      Defaults to []
+#                          Defaults to []
 # ['collectd_enabled'] - Use collectd plugin
-#                     Defaults to false
+#                        Defaults to false
+# ['hh_max_size'] - Default maximum size of all hinted handoff queues in bytes
+#                   Defaults to 1024 * 1024 * 1024
+# ['hh_max_age'] - Default maximum amount of time that a hinted handoff write can stay in the queue.  After this time, the write will be purged
+#                  Defaults to 7 * 24 h
+# ['hh_retry_rate_limit'] - Default rate that hinted handoffs will be retried. The rate is in bytes per second and applies across all nodes when retried. 
+#                           A value of 0 disables the rate limit
+#                           Defaults to 0
+# ['hh_retry_interval'] - Default amout of time the system waits before attempting to flush hinted handoff queues
+#                         Defaults to 1s
 #
 # === Examples
 #
@@ -130,7 +139,9 @@ class influxdb (
   $collectd_bind_address              = $influxdb::params::collectd_bind_address,
   $collectd_database                  = $influxdb::params::collectd_database,
   $collectd_typesdb                   = $influxdb::params::collectd_typesdb,
-
+  $collectd_batch_size                = $influxdb::params::collectd_batch_size,
+  $collectd_batch_timeout             = $influxdb::params::collectd_batch_timeout,
+  $collectd_retention_policy          = $influxdb::params::collectd_retention_policy,
 
 
 ) inherits ::influxdb::params {

@@ -49,7 +49,6 @@ If your server can't connect directly to Internet, let's use a proxy :
 
 ##Usage
 
-
 To enable Graphite plugin
 
 ~~~puppet
@@ -74,6 +73,13 @@ You can also use advanced custom configuration:
   }
 ~~~
 
+To enable Collectd plugin:
+
+~~~puppet
+  class { 'influxdb': 
+    collectd_enable => true,
+  }
+
 ##Reference
 
 ###Classes
@@ -95,7 +101,7 @@ This module has been tested on:
 
  - Debian 7 Wheezy
 
-It should also work on Ubuntu and RedHat osfamily
+It should also work on Debian-based OS (Ubuntu) and RedHat osfamily
 
 This module is fully compatible with Puppet 3.x and Puppet 4.x
 
@@ -107,4 +113,4 @@ tracker](https://github.com/olivierHa/puppet-influxdb/issues)
 ##Development
 
  - Support of clustering and others services
- - Tests, tests, tests ...
+ - rspec and beaker tests
