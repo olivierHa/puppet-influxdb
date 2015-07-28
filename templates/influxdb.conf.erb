@@ -24,6 +24,11 @@ reporting-disabled = <%= scope.lookupvar('influxdb::reporting_disabled') %>
   heartbeat-timeout = "<%= scope.lookupvar('influxdb::meta_heartbeat_timeout') %>"
   leader-lease-timeout = "<%= scope.lookupvar('influxdb::meta_leader_lease_timeout') %>"
   commit-timeout = "<%= scope.lookupvar('influxdb::meta_commit_timeout') %>"
+  <% meta_peers = scope.lookupvar('influxdb::meta_peers')
+  if meta_peers and meta_peers != [] -%>
+peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
+  <% end -%>
+
 
 ###
 ### [data]
@@ -60,6 +65,15 @@ reporting-disabled = <%= scope.lookupvar('influxdb::reporting_disabled') %>
 [retention]
   enabled = <%= scope.lookupvar('influxdb::retention_enabled') %>
   check-interval = "<%= scope.lookupvar('influxdb::retention_check_interval') %>"
+<% if scope.lookupvar('influxdb::meta_peers') and scope.lookupvar('influxdb::meta_peers') != [] -%>
+  replication = <%= scope.lookupvar('influxdb::retention_replication') %>
+<% end %>
+
+
+[shard-precreation]
+  enabled = true
+  check-interval = "10m0s"
+  advance-period = "30m0s"
 
 ###
 ### [admin]
@@ -109,16 +123,12 @@ port = <%= @admin_port %>
 
   ### Default tags that will be added to all metrics.  These can be overridden at the template level
   ### or by tags extracted from metric
-   
   # tags = ["region=us-east", "zone=1c"]
-  <% graphite_tags = scope.lookupvar('influxdb::graphite_tags')
+
+<% graphite_tags = scope.lookupvar('influxdb::graphite_tags')
   if graphite_tags and graphite_tags != [] %>
-  tags = [
-  <% graphite_tags.each do |tag| -%>
-  "<%= tag %>", 
-  ]
-  <% end -%>
-  <% end -%>
+  tags = [ <% graphite_tags.each do |tag| -%> "<%= tag %>", ] <% end -%>
+<% end -%>
   
 
   ### Each template line requires a template pattern.  It can have an optional
@@ -154,10 +164,9 @@ port = <%= @admin_port %>
   typesdb = "<%= scope.lookupvar('influxdb::collectd_typesdb') %>"
   batch_size = <%= scope.lookupvar('influxdb::collectd_batch_size') %>
   batch-timeout = "<%= scope.lookupvar('influxdb::collectd_batch_timeout') %>"
-  <% if scope.lookupvar('influxdb::collectd_retention_policy') and scope.lookupvar('influxdb::collectd_retention_policy') != '' %>
+<% if scope.lookupvar('influxdb::collectd_retention_policy') and scope.lookupvar('influxdb::collectd_retention_policy') != '' %>
   retention-policy = "<%= scope.lookupvar('influxdb::collectd_retention_policy') %>"
-  <% end %>
-
+<% end %>
 
 ###
 ### [opentsdb]

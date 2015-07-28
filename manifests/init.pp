@@ -90,6 +90,7 @@ class influxdb (
   $meta_heartbeat_timeout         = $influxdb::params::meta_heartbeat_timeout,
   $meta_leader_lease_timeout      = $influxdb::params::meta_leader_lease_timeout,
   $meta_commit_timeout            = $influxdb::params::meta_commit_timeout,
+  $meta_peers                     = $influxdb::params::meta_peers,
 
   # Data Section
   $data_max_wal_size              = $influxdb::params::data_max_wal_size,
@@ -103,6 +104,7 @@ class influxdb (
   # Retention Section
   $retention_enabled              = $influxdb::params::retention_enabled,
   $retention_check_interval       = $influxdb::params::retention_check_interval,
+  $retention_replication          = $influxdb::params::retention_replication,
 
   # Graphite Section
   $graphite_enabled               = $influxdb::params::graphite_enabled,

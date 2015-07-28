@@ -79,6 +79,19 @@ To enable Collectd plugin:
   class { 'influxdb': 
     collectd_enable => true,
   }
+~~~
+
+For a clustering setup : 
+
+~~~puppet
+  class { 'influxdb': 
+    meta_peers => [
+      'IP_address_A:bind_address_port_A',
+      'IP_address_B:bind_address_port_B',
+      'IP_address_C:bind_address_port_C',
+      ]
+  }
+~~~
 
 ##Reference
 
@@ -112,5 +125,6 @@ tracker](https://github.com/olivierHa/puppet-influxdb/issues)
 
 ##Development
 
- - Support of clustering and others services
+ - Http,admin and opentsdb sections
+ - Validation of given parameters
  - rspec and beaker tests

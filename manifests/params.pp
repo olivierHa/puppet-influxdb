@@ -55,6 +55,7 @@ class influxdb::params {
   $meta_heartbeat_timeout = '1s'
   $meta_leader_lease_timeout = '500ms'
   $meta_commit_timeout = '50ms'
+  $meta_peers = []
 
   # Data Sections
   $data_max_wal_size = 104857600
@@ -68,6 +69,7 @@ class influxdb::params {
   # Retention Section
   $retention_enabled = true
   $retention_check_interval = '10m'
+  $retention_replication = 3
 
   # Graphite Section
   $graphite_enabled = false
@@ -76,7 +78,7 @@ class influxdb::params {
   $graphite_consistency_level = 'one'
   $graphite_separator = '.'
   $graphite_batch_size = 0
-  $graphite_batch_timeout = '10s'
+  $graphite_batch_timeout = '0'
   $graphite_templates = []
   $graphite_database  = 'graphite'
   $graphite_tags  = []
@@ -87,27 +89,25 @@ class influxdb::params {
   $collectd_database = 'collectd'
   $collectd_typesdb = '/usr/share/collectd/types.db'
   $collectd_batch_size = 5000
-  $collectd_batch_timeout = "10s"
+  $collectd_batch_timeout = '10s'
   $collectd_retention_policy = ''
 
   # hinted-handoff Section
   $hh_enabled = true
   $hh_max_size = 1073741824
-  $hh_max_age = "168h"
+  $hh_max_age = '168h0m0s'
   $hh_retry_rate_limit = 0
-  $hh_retry_interval= "1s" 
+  $hh_retry_interval= '1s' 
 
   # continuous_queries Section
   $cqueries_enabled = true
   $cqueries_recompute_previous_n = 2
-  $cqueries_recompute_no_older_than = "10m"
+  $cqueries_recompute_no_older_than = '10m0s'
   $cqueries_compute_runs_per_interval = 10
-  $cqueries_compute_no_more_than = "2m"
+  $cqueries_compute_no_more_than = '2m0s'
 
   # monitoring section
   $monitoring_enabled = true
-  $monitoring_write_interval = "24h"
-
-
+  $monitoring_write_interval = '1m0s'
 
 }
