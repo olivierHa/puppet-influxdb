@@ -81,6 +81,12 @@ class influxdb::params {
   $graphite_database  = 'graphite'
   $graphite_tags  = []
 
+  # Collectd Section
+  $collectd_enabled = false
+  $collectd_bind_address = ''
+  $collectd_database = ''
+  $collectd_typesdb = ''
+
   # hinted-handoff Section
   $hh_enabled = true
   $hh_max_size = 1073741824
@@ -98,6 +104,7 @@ class influxdb::params {
   # monitoring section
   $monitoring_enabled = true
   $monitoring_write_interval = "24h"
+
 
 
 }

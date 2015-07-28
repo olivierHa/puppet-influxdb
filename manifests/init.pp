@@ -36,6 +36,8 @@
 #                      Defaults to []
 # ['graphite_templates'] - Graphite templates 
 #                      Defaults to []
+# ['collectd_enabled'] - Use collectd plugin
+#                     Defaults to false
 #
 # === Examples
 #
@@ -122,6 +124,12 @@ class influxdb (
   # Monitoring Section
   $monitoring_enabled                 = $influxdb::params::monitoring_enabled,
   $monitoring_write_interval          = $influxdb::params::monitoring_write_interval,
+
+  # collectd
+  $collectd_enabled                   = $influxdb::params::collectd_enabled,
+  $collectd_bind_address              = $influxdb::params::collectd_bind_address,
+  $collectd_database                  = $influxdb::params::collectd_database,
+  $collectd_typesdb                   = $influxdb::params::collectd_typesdb,
 
 
 

@@ -148,10 +148,11 @@ port = <%= @admin_port %>
 ###
 
 [collectd]
-  enabled = false
-  # bind-address = ""
-  # database = ""
-  # typesdb = ""
+  enabled = <%= scope.lookupvar('influxdb::collectd_enabled') %>
+  bind-address = "<%= scope.lookupvar('influxdb::collectd_bind_address') %>"
+  database = "<%= scope.lookupvar('influxdb::collectd_database') %>"
+  typesdb = "<%= scope.lookupvar('influxdb::collectd_typesdb') %>"
+
 
 ###
 ### [opentsdb]
