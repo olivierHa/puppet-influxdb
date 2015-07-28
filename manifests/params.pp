@@ -88,5 +88,16 @@ class influxdb::params {
   $hh_retry_rate_limit = 0
   $hh_retry_interval= "1s" 
 
+  # continuous_queries Section
+  $cqueries_enabled = true
+  $cqueries_recompute_previous_n = 2
+  $cqueries_recompute_no_older_than = "10m"
+  $cqueries_compute_runs_per_interval = 10
+  $cqueries_compute_no_more_than = "2m"
+
+  # monitoring section
+  $monitoring_enabled = true
+  $monitoring_write_interval = "24h"
+
 
 }

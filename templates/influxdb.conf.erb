@@ -183,8 +183,8 @@ port = <%= @admin_port %>
 ###
 
 [monitoring]
-  enabled = true
-  write-interval = "24h"
+  enabled = <%= scope.lookupvar('influxdb::monitoring_enabled') %>
+  write-interval = "<%= scope.lookupvar('influxdb::monitoring_write_interval') %>"
 
 ###
 ### [continuous_queries]
@@ -193,11 +193,11 @@ port = <%= @admin_port %>
 ###
 
 [continuous_queries]
-  enabled = true
-  recompute-previous-n = 2
-  recompute-no-older-than = "10m"
-  compute-runs-per-interval = 10
-  compute-no-more-than = "2m"
+  enabled = <%= scope.lookupvar('influxdb::cqueries_enabled') %>
+  recompute-previous-n = <%= scope.lookupvar('influxdb::cqueries_recompute_previous_n') %>
+  recompute-no-older-than = "<%= scope.lookupvar('influxdb::cqueries_recompute_no_older_than') %>"
+  compute-runs-per-interval = <%= scope.lookupvar('influxdb::cqueries_compute_runs_per_interval') %>
+  compute-no-more-than = "<%= scope.lookupvar('influxdb::cqueries_compute_no_more_than') %>"
 
 ###
 ### [hinted-handoff]

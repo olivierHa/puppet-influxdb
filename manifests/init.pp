@@ -112,6 +112,18 @@ class influxdb (
   $hh_retry_rate_limit            = $influxdb::params::hh_retry_rate_limit,
   $hh_retry_interval              = $influxdb::params::hh_retry_interval,
 
+  # continuous_queries Section
+  $cqueries_enabled                   = $influxdb::params::cqueries_enabled,
+  $cqueries_recompute_previous_n      = $influxdb::params::cqueries_recompute_previous_n,
+  $cqueries_recompute_no_older_than   = $influxdb::params::cqueries_recompute_no_older_than,
+  $cqueries_compute_runs_per_interval = $influxdb::params::cqueries_compute_runs_per_interval, 
+  $cqueries_compute_no_more_than      = $influxdb::params::cqueries_compute_no_more_than,
+
+  # Monitoring Section
+  $monitoring_enabled                 = $influxdb::params::monitoring_enabled,
+  $monitoring_write_interval          = $influxdb::params::monitoring_write_interval,
+
+
 
 ) inherits ::influxdb::params {
 
