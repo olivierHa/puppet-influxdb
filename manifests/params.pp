@@ -81,4 +81,12 @@ class influxdb::params {
   $graphite_database  = 'graphite'
   $graphite_tags  = []
 
+  # hinted-handoff Section
+  $hh_enabled = true
+  $hh_max_size = 1073741824
+  $hh_max_age = "168h"
+  $hh_retry_rate_limit = 0
+  $hh_retry_interval= "1s" 
+
+
 }

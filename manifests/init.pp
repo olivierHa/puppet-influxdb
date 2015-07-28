@@ -105,6 +105,14 @@ class influxdb (
   $graphite_database              = $influxdb::params::graphite_database,
   $graphite_tags                  = $influxdb::params::graphite_tags,
 
+  # hinted-handoff Section
+  $hh_enabled                     = $influxdb::params::hh_enabled,
+  $hh_max_size                    = $influxdb::params::hh_max_size,
+  $hh_max_age                     = $influxdb::params::hh_max_age,
+  $hh_retry_rate_limit            = $influxdb::params::hh_retry_rate_limit,
+  $hh_retry_interval              = $influxdb::params::hh_retry_interval,
+
+
 ) inherits ::influxdb::params {
 
   # validate parameters here

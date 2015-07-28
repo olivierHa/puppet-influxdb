@@ -208,9 +208,9 @@ port = <%= @admin_port %>
 ###
 
 [hinted-handoff]
-  enabled = true
+  enabled = <%= scope.lookupvar('influxdb::hh_enabled') %>
   dir = "<%= @hh_dir %>"
-  max-size = 1073741824
-  max-age = "168h"
-  retry-rate-limit = 0
-  retry-interval = "1s"
+  max-size = <%= scope.lookupvar('influxdb::hh_max_size') %>
+  max-age = "<%= scope.lookupvar('influxdb::hh_max_age') %>"
+  retry-rate-limit = <%= scope.lookupvar('influxdb::hh_retry_rate_limit') %>
+  retry-interval = "<%= scope.lookupvar('influxdb::hh_retry_interval') %>"
