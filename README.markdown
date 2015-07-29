@@ -327,6 +327,5 @@ tracker](https://github.com/olivierHa/puppet-influxdb/issues)
 
 ##Development
 
- - Http,admin and opentsdb sections
  - Validation of given parameters
  - rspec and beaker tests

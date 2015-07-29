@@ -1,3 +1,7 @@
+2015-07-29 Release 0.3.0
+- Handle new parameters : admin, http, opentsdb, Shard precreation
+- More documentation
+
 2015-07-28 Release 0.2.0
 - Handle new parameters : collectd, monitoring, Hinted-handoff and Continuous_queries
 - Handle Clustering
