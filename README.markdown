@@ -16,11 +16,12 @@
 ##Overview
 
 The influxdb module lets you use Puppet to install, configure, and manage Influxdb, version > 0.9.x.
+The current InfluxDB version is 0.9.2
 
 ##Module Description
 
 InfluxDB is a Open source distributed time series, events, and metrics database. 
-This module handles the installation (currently via downloading the package from influxdb website) and most of the parameters.
+This module handles the installation (currently via downloading the package from influxdb website) and every configuration parameters.
 
 Support for Puppet 3.x and Puppet 4.x
 
@@ -44,8 +45,9 @@ If your server can't connect directly to Internet, let's use a proxy :
 
 ###What influxdb affects
 
-* Configuration files are under /etc/opt/influxdb
-* Binaries are under /opt/influxdb
+* influxdb package.
+* influxdb configuration file.
+* influxdb service.
 
 ##Usage
 
@@ -107,6 +109,99 @@ For a clustering setup :
 * `influxdb::config`: Configures InfluxDB.
 * `influxdb::params`: Manages InfluxDB parameters.
 * `influxdb::service`: Manages the InfluxDB daemon.
+
+###Parameters
+
+Every configuration option of influxdb is managed by this module. 
+Puppet variables can't contain hyphens, so they are replaced by an underscore to match influxdb variables ; puppet variables got a prefix to avoid collision too.
+
+####`package_name`
+
+String
+
+####`package_ensure`
+
+####`package_source`
+
+####`package_suffix`
+
+####`package_version`
+
+####`package_dldir`
+
+####`package_source`
+
+####`service_name`
+
+####`proxy_http`
+
+####`config_file`
+
+####`influxdb_user`
+
+####`influxdb_group`
+
+####`conf_template`
+
+####`reporting_disabled`
+
+####`storage_dir`
+
+####`meta_influxdb_hostname`
+
+####`meta_bind_address`
+
+####`meta_retention_autocreate`
+
+####`meta_election_timeout`
+
+####`meta_heartbeat_timeout`
+
+####`meta_leader_lease_timeout`
+
+####`meta_commit_timeout`
+
+####`meta_peers`
+
+####`data_max_wal_size`
+
+####`data_wal_flush_interval`
+
+####`data_wal_partition_flush_delay`
+
+####`cluster_shard_writer_timeout`
+
+####`cluster_write_timeout`
+
+####`retention_enabled`
+
+####`retention_check_interval`
+
+####`retention_replication`
+
+####`graphite_enabled`
+
+Boolean, if enabled sets up the graphite plugin
+
+####`graphite_bind_address`
+
+####`graphite_protocol`
+
+####`graphite_consistency_level`
+
+####`graphite_separator`
+
+####`graphite_batch_size`
+
+####`graphite_batch_timeout`
+
+####`graphite_templates`
+
+####`graphite_database`
+
+####`graphite_tags`
+
+
 
 ##Limitations
 
