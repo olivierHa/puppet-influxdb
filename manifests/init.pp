@@ -106,6 +106,22 @@ class influxdb (
   $retention_check_interval       = $influxdb::params::retention_check_interval,
   $retention_replication          = $influxdb::params::retention_replication,
 
+  # Http Section
+  $http_enabled                   = $influxdb::params::http_enabled,
+  $http_bind_address              = $influxdb::params::http_bind_address,
+  $http_log_enabled               = $influxdb::params::http_log_enabled,
+  $http_auth_enabled              = $influxdb::params::http_auth_enabled,
+  $http_write_tracing             = $influxdb::params::http_write_tracing,
+  $http_pprof_enabled             = $influxdb::params::http_pprof_enabled,
+  $http_https_enabled             = $influxdb::params::http_https_enabled,
+  $http_https_certificate         = $influxdb::params::http_https_certificate,
+
+  # Admin Section
+  $admin_enabled                  = $influxdb::params::admin_enabled,
+  $admin_bind_address             = $influxdb::params::admin_bind_address,
+  $admin_https_enabled            = $influxdb::params::admin_https_enabled,
+  $admin_https_certificate        = $influxdb::params::admin_https_certificate,
+
   # Graphite Section
   $graphite_enabled               = $influxdb::params::graphite_enabled,
   $graphite_bind_address          = $influxdb::params::graphite_bind_address,
@@ -145,6 +161,17 @@ class influxdb (
   $collectd_batch_timeout             = $influxdb::params::collectd_batch_timeout,
   $collectd_retention_policy          = $influxdb::params::collectd_retention_policy,
 
+  # Opentsdb section
+  $opentsdb_enabled                   = $influxdb::params::opentsdb_enabled,
+  $opentsdb_bind_address              = $influxdb::params::opentsdb_bind_address,
+  $opentsdb_database                  = $influxdb::params::opentsdb_database,
+  $opentsdb_retention_policy          = $influxdb::params::opentsdb_retention_policy,
+  $opentsdb_consistency_level         = $influxdb::params::opentsdb_consistency_level,
+
+  # Shard Precreation
+  $shard_precreation_enabled          = $influxdb::params::shard_precreation_enabled,
+  $shard_precreation_check_interval   = $influxdb::params::shard_precreation_check_interval,
+  $shard_precreation_advance_period   = $influxdb::params::shard_precreation_advance_period,
 
 ) inherits ::influxdb::params {
 

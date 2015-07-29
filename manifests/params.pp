@@ -71,6 +71,24 @@ class influxdb::params {
   $retention_check_interval = '10m'
   $retention_replication = 3
 
+  # Http Section
+
+  $http_enabled = true
+  $http_bind_address = ':8086'
+  $http_log_enabled = true
+  $http_auth_enabled = false
+  $http_write_tracing = false
+  $http_pprof_enabled = false
+  $http_https_enabled = false
+  $http_https_certificate = '/etc/ssl/influxdb.pem'
+
+  # Admin Section
+
+  $admin_enabled = true
+  $admin_bind_address = ':8083'
+  $admin_https_enabled = false
+  $admin_https_certificate = '/etc/ssl/influxdb.pem'
+
   # Graphite Section
   $graphite_enabled = false
   $graphite_bind_address = ':2003'
@@ -92,6 +110,14 @@ class influxdb::params {
   $collectd_batch_timeout = '10s'
   $collectd_retention_policy = ''
 
+  # Opentsdb section
+  $opentsdb_enabled = false
+  $opentsdb_bind_address = ':4242'
+  $opentsdb_database = 'opentsdb'
+  $opentsdb_retention_policy = ''
+  $opentsdb_consistency_level = 'one'
+  
+
   # hinted-handoff Section
   $hh_enabled = true
   $hh_max_size = 1073741824
@@ -109,5 +135,10 @@ class influxdb::params {
   # monitoring section
   $monitoring_enabled = true
   $monitoring_write_interval = '1m0s'
+  
+  # Shard precreation Section
+  $shard_precreation_enabled = true
+  $shard_precreation_check_interval = '10m0s'
+  $shard_precreation_advance_period = '30m0s'
 
 }

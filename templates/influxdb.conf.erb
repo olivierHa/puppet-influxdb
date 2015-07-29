@@ -71,9 +71,9 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 
 
 [shard-precreation]
-  enabled = true
-  check-interval = "10m0s"
-  advance-period = "30m0s"
+  enabled = <%= scope.lookupvar('influxdb::shard_precreation_enabled') %>
+  check-interval = "<%= scope.lookupvar('influxdb::shard_precreation_check_interval') %>"
+  advance-period = "<%= scope.lookupvar('influxdb::shard_precreation_advance_period') %>"
 
 ###
 ### [admin]
@@ -81,14 +81,12 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ### Controls the availability of the built-in, web-based admin interface.
 ###
 
-<% if @admin_port -%>
 [admin]
-port = <%= @admin_port %>
-<% end -%>
+  enabled = <%= scope.lookupvar('influxdb::admin_enabled') %>
+  bind-address = "<%= scope.lookupvar('influxdb::admin_bind_address') %>"
+  https-enabled = <%= scope.lookupvar('influxdb::admin_https_enabled') %>
+  https-certificate = "<%= scope.lookupvar('influxdb::admin_https_certificate') %>"
 
-[admin]
-  enabled = true
-  bind-address = ":8083"
 
 ###
 ### [http]
@@ -98,12 +96,15 @@ port = <%= @admin_port %>
 ###
 
 [http]
-  enabled = true
-  bind-address = ":8086"
-  auth-enabled = false
-  log-enabled = true
-  write-tracing = false
-  pprof-enabled = false
+  enabled = <%= scope.lookupvar('influxdb::http_enabled') %>
+  bind-address = "<%= scope.lookupvar('influxdb::http_bind_address') %>"
+  auth-enabled = <%= scope.lookupvar('influxdb::http_auth_enabled') %>
+  log-enabled = <%= scope.lookupvar('influxdb::http_log_enabled') %>
+  write-tracing = <%= scope.lookupvar('influxdb::http_write_tracing') %>
+  pprof-enabled = <%= scope.lookupvar('influxdb::http_pprof_enabled') %>
+  https-enabled = <%= scope.lookupvar('influxdb::http_https_enabled') %>
+  https-certificate = "<%= scope.lookupvar('influxdb::http_https_certificate') %>"
+
 
 ###
 ### [[graphite]]
@@ -175,10 +176,13 @@ port = <%= @admin_port %>
 ###
 
 [opentsdb]
-  enabled = false
-  # bind-address = ""
-  # database = ""
-  # retention-policy = ""
+  enabled = <%= scope.lookupvar('influxdb::opentsdb_enabled') %>
+  bind-address = "<%= scope.lookupvar('influxdb::opentsdb_bind_address') %>"
+  database = "<%= scope.lookupvar('influxdb::opentsdb_database') %>"
+  consistency-level = "<%= scope.lookupvar('influxdb::opentsdb_consistency_level') %>"
+<% if scope.lookupvar('influxdb::opentsdb_retention_policy') and scope.lookupvar('influxdb::opentsdb_retention_policy') != '' %>
+  retention-policy = "<%= scope.lookupvar('influxdb::opentsdb_retention_policy') %>"
+<% end %>
 
 ###
 ### [udp]
