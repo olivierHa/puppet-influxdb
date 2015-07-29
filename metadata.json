@@ -13,8 +13,8 @@
     "monitoring",
     "tsdb",
     "graphite",
-    "collectd",
-  ]
+    "collectd"
+  ],
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
