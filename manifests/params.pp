@@ -30,7 +30,6 @@ class influxdb::params {
     'RedHat', 'Amazon': {
       $package_provider = 'rpm'
       $package_source = 'http://s3.amazonaws.com/influxdb/influxdb-'
-      $config_file      = '/etc/opt/influxdb/influxdb.conf'
       $package_suffix = $::architecture ? {
           /64/    => '-1.x86_64.rpm',
           default => '-1.i686.rpm',
