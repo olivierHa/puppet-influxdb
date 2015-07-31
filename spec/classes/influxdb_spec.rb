@@ -51,6 +51,9 @@ describe '::influxdb', :type => :class do
       is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/var/opt/influxdb/meta"}
       is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/var/opt/influxdb/hh"}
       is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/var/opt/influxdb/data"}
+      is_expected.to contain_file("/var/opt/influxdb/meta")
+      is_expected.to contain_file("/var/opt/influxdb/hh")
+      is_expected.to contain_file("/var/opt/influxdb/data")
     end
   end
 
@@ -69,6 +72,9 @@ describe '::influxdb', :type => :class do
       is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/meta"}
       is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/hh"}
       is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/data"}
+      is_expected.to contain_file("/data/influxdb/meta")
+      is_expected.to contain_file("/data/influxdb/hh")
+      is_expected.to contain_file("/data/influxdb/data")
     end
   end
 
