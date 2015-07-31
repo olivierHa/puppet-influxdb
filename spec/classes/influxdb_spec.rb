@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'influxdb' do
+describe '::influxdb', :type => :class do
   context 'supported operating systems' do
     ['Debian', 'RedHat'].each do |osfamily|
       describe "influxdb class without any parameters on #{osfamily}" do
@@ -32,4 +32,60 @@ describe 'influxdb' do
       it { expect { should contain_package('influxdb') }.to raise_error(Puppet::Error, /Nexenta not supported/) }
     end
   end
+
+  context "with default parameters" do
+    let :facts do
+      {
+        :osfamily => 'Debian',
+        :operatingsystem => 'Debian',
+        :operatingsystemrelease => '7.8',
+      }
+    end
+    it { is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with(
+        'ensure'  => 'present',
+        'owner'   => 'influxdb',
+        'group'   => 'influxdb',
+        'mode'    => '0644',
+    ) }
+    it do 
+      is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/var/opt/influxdb/meta"}
+      is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/var/opt/influxdb/hh"}
+      is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/var/opt/influxdb/data"}
+    end
+  end
+
+  context "when declaring another storage dir" do
+    let :facts do
+      {
+        :osfamily => 'Debian',
+        :operatingsystem => 'Debian',
+        :operatingsystemrelease => '7.8',
+      }
+    end
+    let :params do
+      { :storage_dir => '/data/influxdb' }
+    end
+    it do 
+      is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/meta"}
+      is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/hh"}
+      is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/data"}
+    end
+  end
+
+  context "with specific wal size plugin" do
+    let :facts do
+      {
+        :osfamily => 'Debian',
+        :operatingsystem => 'Debian',
+        :operatingsystemrelease => '7.8',
+      }
+    end
+    let :params do
+      {
+        :data_max_wal_size => '1024000',  
+      }
+    end
+    it { is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{max-wal-size = 1024000} }
+  end
+
 end

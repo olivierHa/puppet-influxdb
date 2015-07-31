@@ -13,6 +13,7 @@ class influxdb::params {
   $package_ensure = 'present'
   $package_version = '0.9.2'
   $service_name = 'influxdb'
+
   case $::osfamily {
     'Debian': {
       $package_provider = 'dpkg'
@@ -41,7 +42,7 @@ class influxdb::params {
   }
 
   # Configuration options
-  $storage_dir = '/var/opt/influxdb/'
+  $storage_dir = '/var/opt/influxdb'
   $config_file = '/etc/opt/influxdb/influxdb.conf'
   $conf_template = 'influxdb/influxdb.conf.erb'
 

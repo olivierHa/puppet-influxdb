@@ -1,14 +1,48 @@
 # == Class influxdb::service
 #
-# This class is meant to be called from influxdb
-# It ensure the service is running
+# Manages the InfluxDB daemon
 #
-class influxdb::service {
+# Parameters:
+#
+# Actions:
+#   - Manage Influxdb service
+#
+# Requires:
+#
+# Sample Usage:
+#
+#    sometype { 'foo':
+#      notify => Class['influxdb::service'],
+#    }
+#
+#
+class influxdb::service (
+  $service_name    = $::influxdb::service_name,
+  $service_enable  = true,
+  $service_ensure  = 'running',
+  $service_manage  = true,
+) {
 
-  service { $influxdb::service_name:
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
+  validate_bool($service_enable)
+  validate_bool($service_manage)
+
+  case $service_ensure {
+    true, false, 'running', 'stopped': {
+      $_service_ensure = $service_ensure
+    }
+    default: {
+      $_service_ensure = undef
+    }
   }
+
+  if $service_manage {
+    service { 'influxdb':
+      ensure     => $_service_ensure,
+      name       => $service_name,
+      enable     => $service_enable,
+      hasstatus  => true,
+      hasrestart => true,
+    }
+  }
+
 }
