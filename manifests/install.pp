@@ -1,7 +1,7 @@
 # == Class influxdb::install
 #
-class influxdb::install (
-) inherits influxdb {
+class influxdb::install
+{
 
   if $::influxdb::proxy_http {
     $exec_env = [
