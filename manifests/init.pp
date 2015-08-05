@@ -65,7 +65,6 @@
 #
 class influxdb (
   # Installation parameters
-  $package_name                   = $influxdb::params::package_name,
   $package_ensure                 = $influxdb::params::package_ensure,
   $package_source                 = $influxdb::params::package_source,
   $package_suffix                 = $influxdb::params::package_suffix,

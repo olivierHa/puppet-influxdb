@@ -6,7 +6,7 @@
 class influxdb::params {
 
   # Install options
-  $proxy_host = undef
+  $proxy_http = undef
   $package_dldir = '/opt'
   $influxdb_user = 'influxdb'
   $influxdb_group = 'influxdb'
