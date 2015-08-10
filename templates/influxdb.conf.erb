@@ -114,7 +114,7 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 
 [[graphite]]
   enabled = <%= scope.lookupvar('influxdb::graphite_enabled') %>
-  database = "<%= scope.lookupvar('influxdb::graphite_graphite') %>"
+  database = "<%= scope.lookupvar('influxdb::graphite_database') %>"
   bind-address = "<%= scope.lookupvar('influxdb::graphite_bind_address') %>"
   protocol = "<%= scope.lookupvar('influxdb::graphite_protocol') %>"
   consistency-level = "<%= scope.lookupvar('influxdb::graphite_consistency_level') %>"
@@ -130,7 +130,7 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
   if graphite_tags and graphite_tags != [] %>
   tags = [ <% graphite_tags.each do |tag| -%> "<%= tag %>", ] <% end -%>
 <% end -%>
-  
+
 
   ### Each template line requires a template pattern.  It can have an optional
   ### filter before the template and separated by spaces.  It can also have optional extra
@@ -144,7 +144,7 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 
 <% graphite_template = scope.lookupvar('influxdb::graphite_templates')
    if graphite_template != [] -%>
-   templates = [ 
+   templates = [
    <% graphite_template.each do |template| -%>
    "<%= template %>",
 <% end -%>
