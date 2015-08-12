@@ -1,3 +1,8 @@
+2015-08-12 Release 0.4.0
+- Provider and Type for Database and Retention Policy (Beta)
+- Fix typo in configuration template about graphite database
+- Update default graphite batch size
+
 2015-08-01 Release 0.3.1
 - Fix bug with config_file on Redhat osfamily
 - Add some basic unit tests

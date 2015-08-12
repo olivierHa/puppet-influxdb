@@ -310,6 +310,35 @@ ComputeNoMoreThan paired with the RunsPerInterval will determine the ceiling of 
 For example, if you have RunsPerInterval set to 10 and this setting to 1m. Then for a group by time(1m) will actually only get computed once per interval (and once per PreviousN).
 If you have a group by time(5m) then you'll get five computes per interval. Any group by time window larger than 10m will get computed 10 times for each interval.
 
+###Defined Types
+
+#### influxdb_database
+
+~~~
+influxdb_database { 'graphite':
+  ensure  => 'present',
+}
+~~~
+
+#### influxdb_retention_policy
+
+`influxdb_retention_policy` creates retention policy on databases. 
+To use it you must create the title of the resource as shown below,
+following the pattern of `policy_name@database`:
+
+~~~
+influxdb_retention_policy { '1w@graphite':
+  ensure      => present,
+  database    => 'graphite',
+  duration    => '1w',
+  is_default  => true,
+  replication => '1',
+}
+~~~
+
+Right now, there is a bug in influxdb, Puppet will try at each run to alter the database with the same value.
+See : https://github.com/influxdb/influxdb/issues/3634
+
 ##Limitations
 
 This module has been tested on:
