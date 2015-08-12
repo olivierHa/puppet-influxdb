@@ -339,6 +339,11 @@ influxdb_retention_policy { '1w@graphite':
 Right now, there is a bug in influxdb, Puppet will try at each run to alter the database with the same value.
 See : https://github.com/influxdb/influxdb/issues/3634
 
+```
+Notice: /Stage[main]/Main/Influxdb_retention_policy[1w@graphite]/duration: duration changed '168h0m0s' to '1w'
+```
+Setting duration => '168h' will do the same thing.
+
 ##Limitations
 
 This module has been tested on:
