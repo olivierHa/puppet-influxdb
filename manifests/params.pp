@@ -95,8 +95,8 @@ class influxdb::params {
   $graphite_protocol = 'tcp'
   $graphite_consistency_level = 'one'
   $graphite_separator = '.'
-  $graphite_batch_size = 0
-  $graphite_batch_timeout = '0'
+  $graphite_batch_size = 1000
+  $graphite_batch_timeout = '1s'
   $graphite_templates = []
   $graphite_database  = 'graphite'
   $graphite_tags  = []
