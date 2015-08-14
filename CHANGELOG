@@ -1,3 +1,6 @@
+2015-08-14 Release 0.4.1
+- Better handling of duration format for Retention Policy type/provider
+
 2015-08-12 Release 0.4.0
 - Provider and Type for Database and Retention Policy (Beta)
 - Fix typo in configuration template about graphite database
