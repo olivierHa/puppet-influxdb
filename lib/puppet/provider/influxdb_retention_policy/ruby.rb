@@ -36,7 +36,7 @@ commands :influx_cli => '/opt/influxdb/influx'
            :ensure      => :present,
            :database    => db,
            :replication => replica,
-           :duration    => "#{dur_s}s",
+           :duration    => dur_s,
            :is_default  => is_default
           )
       end
@@ -89,7 +89,7 @@ commands :influx_cli => '/opt/influxdb/influx'
   end
 
   def self.duration_to_s(dur)
-    re = /(\d+w)?(\d+d)?(\d+h)?(\d+m)?(\d+s)?/
+    re = /^(\d+w)?(\d+d)?(\d+h)?(\d+m)?(\d+s)?$/
     match = dur.match re
     if match
       val = 0
@@ -98,9 +98,8 @@ commands :influx_cli => '/opt/influxdb/influx'
       val += match[3].chop.to_i * 3600 if match[3]
       val += match[4].chop.to_i * 60 if match[4]
       val += match[5].chop.to_i if match[5]
-      return val
+      return "#{val}s"
     end
-    Puppet.debug("#Error match duration regex this shouldnt happen with type values!")
     return nil
   end
 
