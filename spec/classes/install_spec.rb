@@ -11,7 +11,7 @@ describe 'influxdb', :type => :class do
     end
    it do
      should contain_package('curl').with_ensure('present')
-     should contain_package('influxdb').with_ensure('present')
+     should contain_package('influxdb').with_ensure('latest')
      should contain_exec('get_influxdb')
    end
   end

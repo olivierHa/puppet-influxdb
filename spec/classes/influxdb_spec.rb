@@ -17,7 +17,7 @@ describe '::influxdb', :type => :class do
         it { should contain_class('influxdb::service').that_subscribes_to('influxdb::config') }
 
         it { should contain_service('influxdb') }
-        it { should contain_package('influxdb').with_ensure('present') }
+        it { should contain_package('influxdb').with_ensure('latest') }
       end
     end
   end
