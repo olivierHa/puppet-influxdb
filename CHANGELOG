@@ -1,3 +1,6 @@
+2015-08-27 Release 0.4.2
+- Influxdb 0.9.3
+
 2015-08-14 Release 0.4.1
 - Better handling of duration format for Retention Policy type/provider
 

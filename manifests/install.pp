@@ -3,6 +3,7 @@
 class influxdb::install
 {
 
+
   if $::influxdb::proxy_http {
     $exec_env = [
       "http_proxy=${::influxdb::proxy_http}",
@@ -25,7 +26,7 @@ class influxdb::install
     require     => Package['curl'],
   } ->
   package {'influxdb':
-    ensure   => $::influxdb::package_ensure,
+    ensure   => latest,
     provider => $::influxdb::package_provider,
     source   => "${::influxdb::package_dldir}/influxdb_${::influxdb::package_version}${::influxdb::package_suffix}",
   }

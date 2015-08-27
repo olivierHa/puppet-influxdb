@@ -6,6 +6,7 @@ class influxdb::config (
   $data_dir = "${influxdb::storage_dir}/data",
   $meta_dir = "${influxdb::storage_dir}/meta",
   $hh_dir   = "${influxdb::storage_dir}/hh",
+  $wal_dir  = "${influxdb::storage_dir}/wal",
 ) {
 
   file { $::influxdb::storage_dir:
@@ -30,6 +31,13 @@ class influxdb::config (
   }
 
   file { $data_dir:
+    ensure => directory,
+    owner  => $::influxdb::influxdb_user,
+    group  => $::influxdb::influxdb_group,
+    mode   => '0750',
+  }
+
+  file { $wal_dir:
     ensure => directory,
     owner  => $::influxdb::influxdb_user,
     group  => $::influxdb::influxdb_group,

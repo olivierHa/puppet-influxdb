@@ -184,7 +184,11 @@ String
 
 ####`cluster_shard_writer_timeout`
 
+The time within which a shard must respond to write.
+
 ####`cluster_write_timeout`
+
+The time within which a write operation must complete on the cluster.
 
 ####`retention_enabled`
 

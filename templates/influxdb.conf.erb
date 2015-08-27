@@ -44,6 +44,8 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
   max-wal-size = <%= scope.lookupvar('influxdb::data_max_wal_size') %> # Maximum size the WAL can reach before a flush. Defaults to 100MB.
   wal-flush-interval = "<%= scope.lookupvar('influxdb::data_wal_flush_interval') %>"  # Maximum time data can sit in WAL before a flush.
   wal-partition-flush-delay = "<%= scope.lookupvar('influxdb::data_wal_partition_flush_delay') %>" # The delay time between each WAL partition being flushed.
+  wal-dir = "<%= @wal_dir %>"
+  wal-enable-logging = true
 
 ###
 ### [cluster]
@@ -190,7 +192,7 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ### Controls the listener for InfluxDB line protocol data via UDP.
 ###
 
-[udp]
+[[udp]]
   enabled = false
   # bind-address = ""
   # database = ""
