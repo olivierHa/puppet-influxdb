@@ -109,12 +109,12 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 
 
 ###
-### [[graphite]]
+### [graphite]
 ###
 ### Controls one or many listeners for Graphite data.
 ###
 
-[[graphite]]
+[graphite]
   enabled = <%= scope.lookupvar('influxdb::graphite_enabled') %>
   database = "<%= scope.lookupvar('influxdb::graphite_database') %>"
   bind-address = "<%= scope.lookupvar('influxdb::graphite_bind_address') %>"
@@ -192,7 +192,7 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ### Controls the listener for InfluxDB line protocol data via UDP.
 ###
 
-[[udp]]
+[udp]
   enabled = false
   # bind-address = ""
   # database = ""
