@@ -121,6 +121,9 @@ class influxdb (
   $admin_https_enabled            = $influxdb::params::admin_https_enabled,
   $admin_https_certificate        = $influxdb::params::admin_https_certificate,
 
+  # Snapshot Section
+  $snapshot_enabled               = $influxdb::params::snapshot_enabled,
+
   # Graphite Section
   $graphite_enabled               = $influxdb::params::graphite_enabled,
   $graphite_bind_address          = $influxdb::params::graphite_bind_address,
