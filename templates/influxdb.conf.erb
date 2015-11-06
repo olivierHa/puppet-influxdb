@@ -89,6 +89,14 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
   https-enabled = <%= scope.lookupvar('influxdb::admin_https_enabled') %>
   https-certificate = "<%= scope.lookupvar('influxdb::admin_https_certificate') %>"
 
+###
+### [snapshot]
+###
+### Controls whether or not database snapshots are permitted
+###
+
+[snapshot]
+  enabled = <%= scope.lookupvar('influxdb::snapshot_enabled') %>
 
 ###
 ### [http]

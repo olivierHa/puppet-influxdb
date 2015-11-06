@@ -89,6 +89,9 @@ class influxdb::params {
   $admin_https_enabled = false
   $admin_https_certificate = '/etc/ssl/influxdb.pem'
 
+  # Snapshot Section
+  $snapshot_enabled = false
+
   # Graphite Section
   $graphite_enabled = false
   $graphite_bind_address = ':2003'
