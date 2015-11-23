@@ -6,11 +6,11 @@
 #
 # [*package_version*] - Specify influxdb version
 #                      Defaults to "0.9.2"
-# ['max-wal-size']   - Maximum size the WAL can reach before a flush.
+# ['max_wal_size']   - Maximum size the WAL can reach before a flush.
 #                      Defaults to "100MB"
-# ['wal-flush-interval']  - Maximum time data can sit in WAL before a flush.
+# ['wal_flush_interval']  - Maximum time data can sit in WAL before a flush.
 #                      Defaults to "10m"
-# ['wal-partition-flush-delay'] - The delay time between each WAL partition being flushed.
+# ['wal_partition_flush-delay'] - The delay time between each WAL partition being flushed.
 #                      Defaults to "2s"
 # ['cluster_shard_writer_timeout'] - The time within which a shard must respond to write.
 #                      Defaults to "5s"
