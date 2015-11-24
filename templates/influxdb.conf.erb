@@ -6,7 +6,7 @@
 # to track the number of instances running and the versions, which
 # is very helpful for us.
 # Change this option to true to disable reporting.
-<% @main_section.each_pair do |key, value| %>
+<% @main_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -18,7 +18,7 @@
 ###
 
 [meta]
-<% @meta_section.each_pair do |key, value| %>
+<% @meta_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -33,7 +33,7 @@
 ###
 
 [data]
-<% @data_section.each_pair do |key, value| %>
+<% @data_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -45,7 +45,7 @@
 ###
 
 [cluster]
-<% @cluster_section.each_pair do |key, value| %>
+<% @cluster_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -56,13 +56,13 @@
 ###
 
 [retention]
-<% @retention_section.each_pair do |key, value| %>
+<% @retention_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
 
 [shard-precreation]
-<% @shard_pc_section.each_pair do |key, value| %>
+<% @shard_pc_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -73,7 +73,7 @@
 ###
 
 [admin]
-<% @admin_section.each_pair do |key, value| %>
+<% @admin_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -87,7 +87,7 @@
 
 [http]
 # TODO TOMORROW: Figure out how to loop through the hash values.
-<% @http_section.each_pair do |key, value| %>
+<% @http_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 ###
@@ -95,11 +95,12 @@
 ###
 ### Controls one or many listeners for Graphite data.
 ###
-
-<% graphite_section = scope['::influxdb::graphite_sections'] %>
-   <% graphite_section.each do |section| %>
-[[graphite]]
-   <%= section %>
+<% if scope['::influxdb::graphite_sections'] %>
+   <% graphite_section = scope['::influxdb::graphite_sections'] %>
+      <% graphite_section.sort_by{|key, value| key}.each do |section| %>
+   [[graphite]]
+      <%= section %>
+   <% end %>
 <% end %>
 
 ###
@@ -109,7 +110,7 @@
 ###
 
 [collectd]
-<% @collectd_section.each_pair do |key, value| %>
+<% @collectd_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -120,7 +121,7 @@
 ###
 
 [opentsdb]
-<% @opentsdb_section.each_pair do |key, value| %>
+<% @opentsdb_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -131,7 +132,7 @@
 ###
 
 [[udp]]
-<% @udp_section.each_pair do |key, value| %>
+<% @udp_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -140,7 +141,7 @@
 ###
 
 [monitoring]
-<% @monitoring_section.each_pair do |key, value| %>
+<% @monitoring_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -151,7 +152,7 @@
 ###
 
 [continuous_queries]
-<% @cqueries_section.each_pair do |key, value| %>
+<% @cqueries_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -164,7 +165,7 @@
 ###
 
 [hinted-handoff]
-<% @hh_section.each_pair do |key, value| %>
+<% @hh_section.sort_by{|key, value| key}.each_pair do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 

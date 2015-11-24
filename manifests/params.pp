@@ -48,7 +48,7 @@ class influxdb::params {
 
   $reporting_disabled = false
 
-  $meta_section = {
+  $meta = {
     hostname => 'localhost',
     bind-address => ':8088',
     retention-autocreate => true,
@@ -59,27 +59,27 @@ class influxdb::params {
   }
 
   # Data Sections
-  $data_section = {
+  $data = {
     max-wal-size => 104857600,
     wal-flush-interval => '10m',
     wal-partition-flush-delay => '2s',
    }
 
   # Cluster Section
-  $cluster_section = {
+  $cluster = {
     shard-writer-timeout => '5s',
     write-timeout => '5s',
   }
 
   # Retention Section
-  $retention_section = {
+  $retention = {
     enabled => true,
     check-interval => '10m',
     replication => 3,
   }
 
   # Http Section
-  $http_section = {
+  $http = {
   	enabled => true,
   	bind-address => ':8086',
   	log-enabled => true,
@@ -91,14 +91,14 @@ class influxdb::params {
   }
 
   # Admin Section
-  $admin_section = {
+  $admin = {
   	enabled => true,
   	bind-address => ':8083',
   	https-enabled => false,
   	https-certificate => '/etc/ssl/influxdb.pem',
   }
   # Graphite Section
-  $graphite_sections = {
+  $graphites = {
   	enabled => false,
   	bind-address => ':2003',
   	protocol => 'tcp',
@@ -112,7 +112,7 @@ class influxdb::params {
   }
 
   # Collectd Section
-  $collect_section = {
+  $collectd = {
   	enabled => false,
   	bind-address => ':25826',
   	database => 'collectd',
@@ -122,7 +122,7 @@ class influxdb::params {
   	retention-policy => '',
   }
   # Opentsdb section
-  $opentsdb_section = {
+  $opentsdb = {
   	enabled => false,
   	bind-address => ':4242',
   	database => 'opentsdb',
@@ -131,7 +131,7 @@ class influxdb::params {
   }
 
   # hinted-handoff Section
-  $hh_section = {
+  $hh = {
   	enabled => true,
   	max-size => 1073741824,
   	max-age => '168h0m0s',
@@ -139,7 +139,7 @@ class influxdb::params {
    retry-interval => '1s'
   }
   # continuous_queries Section
-  $cqueries_section = {
+  $cqueries = {
   	enabled => true,
   	recompute-previous-n => 2,
   	recompute-no-older-than => '10m0s',
@@ -147,18 +147,18 @@ class influxdb::params {
   	compute-no-more-than => '2m0s',
   }
   # monitoring section
-  $monitoring_section = {
+  $monitoring = {
     enabled => true,
     write-interval => '1m0s',
   }
 
   # udp section
-  $udp_section = {
+  $udp = {
     enabled => false,
   }
 
   # Shard precreation Section
-  $shard_pc_section = {
+  $shard_pc = {
   	precreation-enabled => true,
   	precreation-check-interval => '10m0s',
   	precreation-advance-period => '30m0s',

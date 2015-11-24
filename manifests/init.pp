@@ -41,9 +41,9 @@
 # [*conf_template*] - Specify template to use for influxdb conf file
 #                      Defaults to "influxdb.conf.erb"
 #
-# [*$_section*] - Each section of the config file is a hash.  Defaults most easily surmised from params.pp
+# [*$section*] - Each section of the config file is a hash.  Defaults most easily surmised from params.pp
 #                      e.g.
-#                         $data_section = {
+#                         $data = {
 #                             max-wal-size => 104857600,
 #                             wal-flush-interval => '10m',
 #                             wal-partition-flush-delay => '2s',
@@ -81,53 +81,66 @@ class influxdb (
   $conf_template                  = $influxdb::params::conf_template,
 
   # Configuration Parameters
-  $main_section                   = $influxdb::params::main_section,
+  $main                   = $influxdb::params::main,
 
   # Meta Section
-  $meta_section                   = $influxdb::params::meta_section,
+  $meta                   = $influxdb::params::meta,
 
   # Data Section
-  $data_section                   = $influxdb::params::data_section,
+  $data                   = $influxdb::params::data,
 
   # Cluster Section
-  $cluster_section                = $influxdb::params::cluster_section,
+  $cluster                = $influxdb::params::cluster,
 
   # Retention Section
-  $retention_section              = $influxdb::params::retention_section,
+  $retention              = $influxdb::params::retention,
 
   # Http Section
-  $http_section                   = $influxdb::params::http_section,
+  $http                   = $influxdb::params::http,
 
   # Admin Section
-  $admin_section                  = $influxdb::params::admin_section,
+  $admin                  = $influxdb::params::admin,
 
   # Graphite Sections
   $graphite_sections,
   
   # hinted-handoff Section
-  $hh_section                     = $influxdb::params::hh_section,
+  $hh                     = $influxdb::params::hh,
 
   # continuous_queries Section
-  $cqueries_section               = $influxdb::params::cqueries_section,
+  $cqueries               = $influxdb::params::cqueries,
 
   # Monitoring Section
-  $monitoring_section             = $influxdb::params::monitoring_section,
+  $monitoring             = $influxdb::params::monitoring,
 
   # collectd
-  $collectd_section               = $influxdb::params::collectd_section,
+  $collectd               = $influxdb::params::collectd,
 
   # Opentsdb section
-  $opentsdb_section               = $influxdb::params::opentsdb_section,
+  $opentsdb               = $influxdb::params::opentsdb,
 
   # UDP Section
-  $udp_section                  = $influxdb::params::udp_section,
+  $udp                  = $influxdb::params::udp,
 
   # Shard Precreation
-  $shard_pc_section                  = $influxdb::params::shard_pc_section
+  $shard_pc                  = $influxdb::params::shard_pc
 
 ) inherits ::influxdb::params {
 
   # validate parameters here
+  $main_section = merge($main, $::influxdb::params::main)
+  $meta_section = merge($meta, $::influxdb::params::meta)
+  $data_section = merge($data, $::influxdb::params::data)
+  $cluster_section = merge($cluster, $::influxdb::params::cluster)
+  $retention_section = merge($retention, $::influxdb::params::retention)
+  $http_section = merge($http, $::influxdb::params::http)
+  $admin_section = merge($admin, $::influxdb::params::admin)
+  $hh_section = merge($hh, $::influxdb::params::hh)
+  $cqueries_section = merge($cqueries, $::influxdb::params::cqueries)
+  $collectd_section = merge($collectd, $::influxdb::params::collectd)
+  $opentsdb_section = merge($opentsdb, $::influxdb::params::opentsdb)
+  $udp_section = merge($udp, $::influxdb::params::udp)
+  $shard_pc_section = merge($shard_pc, $::influxdb::params::shard_pc)
 
   class { '::influxdb::install': } ->
   class { '::influxdb::config': } ~>
