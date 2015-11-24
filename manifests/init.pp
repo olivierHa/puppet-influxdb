@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*package_version*] - Specify influxdb version
-#                      Defaults to "0.9.2"
+#                      Defaults to "0.9.4"
 #
 # [*package_source*] - Specify package source prefix
 #                      Defaults to "http://s3.amazonaws.com/influxdb/influxdb_"
