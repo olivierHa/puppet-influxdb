@@ -6,58 +6,61 @@
 #
 # [*package_version*] - Specify influxdb version
 #                      Defaults to "0.9.2"
-# ['max_wal_size']   - Maximum size the WAL can reach before a flush.
-#                      Defaults to "100MB"
-# ['wal_flush_interval']  - Maximum time data can sit in WAL before a flush.
-#                      Defaults to "10m"
-# ['wal_partition_flush-delay'] - The delay time between each WAL partition being flushed.
-#                      Defaults to "2s"
-# ['cluster_shard_writer_timeout'] - The time within which a shard must respond to write.
-#                      Defaults to "5s"
-# ['cluster_write_timeout'] - The time within which a write operation must complete on the cluster.
-#                      Defaults to "5s"
-# ['graphite_enabled'] - Use graphite plugin
-#                     Defaults to false
-# ['graphite_bind_address'] - Bind address for graphite plugin
-#                     Defaults to "::2003"
-# ['graphite_protocol'] - Graphite Protocol
-#                     Defaults to "tcp"
-# ['graphite_database'] - Graphite Database
-#                         Defaults to "graphite"
-# ['graphite_batch_size'] - Graphite batch size
-#                           Defaults to 0
-# ['graphite_batch_timeout'] - Graphite batch timeout
-#                              Defaults to "10s"
-# ['graphite_consistency_level'] - Default write consistency for the Graphite input 
-#                                  Defaults to "one"
-# ['graphite_separator'] - If matching multiple measurement files, this string will be used to join the matched values.
-#                          Defaults to .
-# ['graphite_tags'] - Graphite tags
-#                     Defaults to []
-# ['graphite_templates'] - Graphite templates 
-#                          Defaults to []
-# ['collectd_enabled'] - Use collectd plugin
-#                        Defaults to false
-# ['hh_max_size'] - Default maximum size of all hinted handoff queues in bytes
-#                   Defaults to 1024 * 1024 * 1024
-# ['hh_max_age'] - Default maximum amount of time that a hinted handoff write can stay in the queue.  After this time, the write will be purged
-#                  Defaults to 7 * 24 h
-# ['hh_retry_rate_limit'] - Default rate that hinted handoffs will be retried. The rate is in bytes per second and applies across all nodes when retried. 
-#                           A value of 0 disables the rate limit
-#                           Defaults to 0
-# ['hh_retry_interval'] - Default amout of time the system waits before attempting to flush hinted handoff queues
-#                         Defaults to 1s
+#
+# [*package_source*] - Specify package source prefix
+#                      Defaults to "http://s3.amazonaws.com/influxdb/influxdb_"
+#
+# [*package_suffix*] - Specify package source suffix
+#                      Defaults to _$arch.$package_provider (e.g. -1.x86_64.rpm or _amd64.deb)
+#
+# [*package_ensure*] - Choose whether to install or uninstall
+#                      Defaults to present
+#
+# [*package_dldir*] - Choose where the package is downloaded
+#                      Defaults to "/opt"
+#
+# [*service_name*] - Specify service name 
+#                      Defaults to "influxdb"
+#
+# [*proxy_http*] - Specify http proxy for package download
+#                      Defaults to undef
+#
+# [*config_file*] - Full path to config file (e.g. /etc/influxdb/influxdb.conf)
+#                    NOTE: This does not create directories.
+#                      Defaults to "/etc/opt/influxdb/influxdb.conf"
+#
+# [*influxdb_user*] - User influxdb will run as (will also create user)
+#                      Defaults to "influxdb"
+#
+# [*influxdb_group*] - Group influxdb will run as (will also create user)
+#                      Defaults to "influxdb"
+#
+# [*influxdb_group*] - Specify http proxy for package download
+#                      Defaults to undef
+#
+# [*conf_template*] - Specify template to use for influxdb conf file
+#                      Defaults to "influxdb.conf.erb"
+#
+# [*$_section*] - Each section of the config file is a hash.  Defaults most easily surmised from params.pp
+#                      e.g.
+#                         $data_section = {
+#                             max-wal-size => 104857600,
+#                             wal-flush-interval => '10m',
+#                             wal-partition-flush-delay => '2s',
+#                          }
+#                       This data may also be pulled in from hiera
 #
 # === Examples
 #
 #  class { influxdb:
-#    package_version  => '0.9.2',
+#    package_version  => '0.9.4',
 #    graphite_enabled => true,
 #  }
 #
 # === Authors
 #
 # Olivier Hanesse <olivier.hanesse@gmail.com>
+# Ashton Davis <acidrainfall@gmail.com>
 #
 # === Copyright
 #
