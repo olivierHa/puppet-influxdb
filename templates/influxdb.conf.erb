@@ -82,9 +82,12 @@
 ###
 ### Controls whether or not database snapshots are permitted
 ###
-
+<% if scope['::influxdb::snapshot_section']%>
 [snapshot]
-  enabled = <%= scope.lookupvar('influxdb::snapshot_enabled') %>
+<% @snapshot_section.sort_by{|key, value| key}.each do |key, value| %>
+     <%= key %> = <%= value %>
+  <% end %>
+<% end %>
 
 ###
 ### [http]

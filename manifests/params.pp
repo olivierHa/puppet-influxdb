@@ -90,6 +90,10 @@ class influxdb::params {
   	https-certificate => '/etc/ssl/influxdb.pem',
   }
 
+  $snapshot = {
+    enabled => false,
+  }
+
   # Admin Section
   $admin = {
   	enabled => true,
