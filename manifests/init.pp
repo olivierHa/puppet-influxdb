@@ -78,99 +78,49 @@ class influxdb (
   $conf_template                  = $influxdb::params::conf_template,
 
   # Configuration Parameters
-  $reporting_disabled             = $influxdb::params::reporting_disabled,
-  $storage_dir                    = $influxdb::params::storage_dir,
+  $main_section                   = $influxdb::params::main_section,
 
   # Meta Section
-  $meta_influxdb_hostname         = $influxdb::params::meta_influxdb_hostname,
-  $meta_bind_address              = $influxdb::params::meta_bind_address,
-  $meta_retention_autocreate      = $influxdb::params::meta_retention_autocreate,
-  $meta_election_timeout          = $influxdb::params::meta_election_timeout,
-  $meta_heartbeat_timeout         = $influxdb::params::meta_heartbeat_timeout,
-  $meta_leader_lease_timeout      = $influxdb::params::meta_leader_lease_timeout,
-  $meta_commit_timeout            = $influxdb::params::meta_commit_timeout,
-  $meta_peers                     = $influxdb::params::meta_peers,
+  $meta_section                   = $influxdb::params::meta_section,
 
   # Data Section
-  $data_max_wal_size              = $influxdb::params::data_max_wal_size,
-  $data_wal_flush_interval        = $influxdb::params::data_wal_flush_interval,
-  $data_wal_partition_flush_delay = $influxdb::params::data_wal_partition_flush_delay,
+  $data_section                   = $influxdb::params::data_section,
 
   # Cluster Section
-  $cluster_shard_writer_timeout   = $influxdb::params::cluster_shard_writer_timeout,
-  $cluster_write_timeout          = $influxdb::params::cluster_write_timeout,
+  $cluster_section                = $influxdb::params::cluster_section,
 
   # Retention Section
-  $retention_enabled              = $influxdb::params::retention_enabled,
-  $retention_check_interval       = $influxdb::params::retention_check_interval,
-  $retention_replication          = $influxdb::params::retention_replication,
+  $retention_section              = $influxdb::params::retention_section,
 
   # Http Section
-  $http_enabled                   = $influxdb::params::http_enabled,
-  $http_bind_address              = $influxdb::params::http_bind_address,
-  $http_log_enabled               = $influxdb::params::http_log_enabled,
-  $http_auth_enabled              = $influxdb::params::http_auth_enabled,
-  $http_write_tracing             = $influxdb::params::http_write_tracing,
-  $http_pprof_enabled             = $influxdb::params::http_pprof_enabled,
-  $http_https_enabled             = $influxdb::params::http_https_enabled,
-  $http_https_certificate         = $influxdb::params::http_https_certificate,
+  $http_section                   = $influxdb::params::http_section,
 
   # Admin Section
-  $admin_enabled                  = $influxdb::params::admin_enabled,
-  $admin_bind_address             = $influxdb::params::admin_bind_address,
-  $admin_https_enabled            = $influxdb::params::admin_https_enabled,
-  $admin_https_certificate        = $influxdb::params::admin_https_certificate,
+  $admin_section                  = $influxdb::params::admin_section,
 
-  # Graphite Section
-  $graphite_enabled               = $influxdb::params::graphite_enabled,
-  $graphite_bind_address          = $influxdb::params::graphite_bind_address,
-  $graphite_protocol              = $influxdb::params::graphite_protocol,
-  $graphite_consistency_level     = $influxdb::params::graphite_consistency_level,
-  $graphite_separator             = $influxdb::params::graphite_separator,
-  $graphite_batch_size            = $influxdb::params::graphite_batch_size,
-  $graphite_batch_timeout         = $influxdb::params::graphite_batch_timeout,
-  $graphite_templates             = $influxdb::params::graphite_templates,
-  $graphite_database              = $influxdb::params::graphite_database,
-  $graphite_tags                  = $influxdb::params::graphite_tags,
-
+  # Graphite Sections
+  $graphite_sections,
+  
   # hinted-handoff Section
-  $hh_enabled                     = $influxdb::params::hh_enabled,
-  $hh_max_size                    = $influxdb::params::hh_max_size,
-  $hh_max_age                     = $influxdb::params::hh_max_age,
-  $hh_retry_rate_limit            = $influxdb::params::hh_retry_rate_limit,
-  $hh_retry_interval              = $influxdb::params::hh_retry_interval,
+  $hh_section                     = $influxdb::params::hh_section,
 
   # continuous_queries Section
-  $cqueries_enabled                   = $influxdb::params::cqueries_enabled,
-  $cqueries_recompute_previous_n      = $influxdb::params::cqueries_recompute_previous_n,
-  $cqueries_recompute_no_older_than   = $influxdb::params::cqueries_recompute_no_older_than,
-  $cqueries_compute_runs_per_interval = $influxdb::params::cqueries_compute_runs_per_interval,
-  $cqueries_compute_no_more_than      = $influxdb::params::cqueries_compute_no_more_than,
+  $cqueries_section               = $influxdb::params::cqueries_section,
 
   # Monitoring Section
-  $monitoring_enabled                 = $influxdb::params::monitoring_enabled,
-  $monitoring_write_interval          = $influxdb::params::monitoring_write_interval,
+  $monitoring_section             = $influxdb::params::monitoring_section,
 
   # collectd
-  $collectd_enabled                   = $influxdb::params::collectd_enabled,
-  $collectd_bind_address              = $influxdb::params::collectd_bind_address,
-  $collectd_database                  = $influxdb::params::collectd_database,
-  $collectd_typesdb                   = $influxdb::params::collectd_typesdb,
-  $collectd_batch_size                = $influxdb::params::collectd_batch_size,
-  $collectd_batch_timeout             = $influxdb::params::collectd_batch_timeout,
-  $collectd_retention_policy          = $influxdb::params::collectd_retention_policy,
+  $collectd_section               = $influxdb::params::collectd_section,
 
   # Opentsdb section
-  $opentsdb_enabled                   = $influxdb::params::opentsdb_enabled,
-  $opentsdb_bind_address              = $influxdb::params::opentsdb_bind_address,
-  $opentsdb_database                  = $influxdb::params::opentsdb_database,
-  $opentsdb_retention_policy          = $influxdb::params::opentsdb_retention_policy,
-  $opentsdb_consistency_level         = $influxdb::params::opentsdb_consistency_level,
+  $opentsdb_section               = $influxdb::params::opentsdb_section,
+
+  # UDP Section
+  $udp_section                  = $influxdb::params::udp_section,
 
   # Shard Precreation
-  $shard_precreation_enabled          = $influxdb::params::shard_precreation_enabled,
-  $shard_precreation_check_interval   = $influxdb::params::shard_precreation_check_interval,
-  $shard_precreation_advance_period   = $influxdb::params::shard_precreation_advance_period,
+  $shard_pc_section                  = $influxdb::params::shard_pc_section
 
 ) inherits ::influxdb::params {
 
