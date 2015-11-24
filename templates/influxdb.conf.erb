@@ -6,7 +6,7 @@
 # to track the number of instances running and the versions, which
 # is very helpful for us.
 # Change this option to true to disable reporting.
-<% @main_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+<% @main_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -18,7 +18,7 @@
 ###
 
 [meta]
-<% @meta_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+<% @meta_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -33,7 +33,7 @@
 ###
 
 [data]
-<% @data_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+<% @data_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -45,7 +45,7 @@
 ###
 
 [cluster]
-<% @cluster_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+<% @cluster_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -56,13 +56,13 @@
 ###
 
 [retention]
-<% @retention_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+<% @retention_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
 
 [shard-precreation]
-<% @shard_pc_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+<% @shard_pc_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -73,7 +73,7 @@
 ###
 
 [admin]
-<% @admin_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+<% @admin_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -87,7 +87,7 @@
 
 [http]
 # TODO TOMORROW: Figure out how to loop through the hash values.
-<% @http_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+<% @http_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 ###
@@ -110,7 +110,7 @@
 ###
 
 [collectd]
-<% @collectd_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+<% @collectd_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -121,7 +121,7 @@
 ###
 
 [opentsdb]
-<% @opentsdb_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+<% @opentsdb_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -132,17 +132,18 @@
 ###
 
 [[udp]]
-<% @udp_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+<% @udp_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
 ###
 ### [monitoring]
 ###
-
+<% if scope['::influxdb::monitoring_section'] %>
 [monitoring]
-<% @monitoring_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+  <% @monitoring_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
+  <% end %>
 <% end %>
 
 ###
@@ -152,7 +153,7 @@
 ###
 
 [continuous_queries]
-<% @cqueries_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+<% @cqueries_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
 <% end %>
 
@@ -163,9 +164,9 @@
 ### store queued data when one node of a cluster is down for a short period
 ### of time.
 ###
-
+<% if scope['::influxdb::hh_section'] %>
 [hinted-handoff]
-<% @hh_section.sort_by{|key, value| key}.each_pair do |key, value| %>
+  <% @hh_section.sort_by{|key, value| key}.each do |key, value| %>
   <%= key %> = <%= value %>
+  <% end %>
 <% end %>
-
