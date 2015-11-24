@@ -99,6 +99,7 @@ class influxdb (
   $http                   = $influxdb::params::http,
 
   # Admin Section
+
   $admin                  = $influxdb::params::admin,
 
   # Graphite Sections
@@ -137,6 +138,7 @@ class influxdb (
   $admin_section = merge($admin, $::influxdb::params::admin)
   $hh_section = merge($hh, $::influxdb::params::hh)
   $cqueries_section = merge($cqueries, $::influxdb::params::cqueries)
+  $snapshot_section = merge($snapshot, $::influxdb::params::snapshot)
   $collectd_section = merge($collectd, $::influxdb::params::collectd)
   $opentsdb_section = merge($opentsdb, $::influxdb::params::opentsdb)
   $udp_section = merge($udp, $::influxdb::params::udp)

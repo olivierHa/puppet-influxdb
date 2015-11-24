@@ -77,6 +77,14 @@
   <%= key %> = <%= value %>
 <% end %>
 
+###
+### [snapshot]
+###
+### Controls whether or not database snapshots are permitted
+###
+
+[snapshot]
+  enabled = <%= scope.lookupvar('influxdb::snapshot_enabled') %>
 
 ###
 ### [http]
