@@ -102,6 +102,9 @@ class influxdb (
 
   $admin                  = $influxdb::params::admin,
 
+  # Snapshot Section
+  $snapshot               = $influxdb::params::snapshot,
+
   # Graphite Sections
   $graphite_sections,
   

@@ -63,7 +63,7 @@ class influxdb::params {
     max-wal-size => 104857600,
     wal-flush-interval => '10m',
     wal-partition-flush-delay => '2s',
-   }
+  }
 
   # Cluster Section
   $cluster = {
@@ -80,14 +80,14 @@ class influxdb::params {
 
   # Http Section
   $http = {
-  	enabled => true,
-  	bind-address => ':8086',
-  	log-enabled => true,
-  	auth-enabled => false,
-  	write-tracing => false,
-  	pprof-enabled => false,
-  	https-enabled => false,
-  	https-certificate => '/etc/ssl/influxdb.pem',
+    enabled => true,
+    bind-address => ':8086',
+    log-enabled => true,
+    auth-enabled => false,
+    write-tracing => false,
+    pprof-enabled => false,
+    https-enabled => false,
+    https-certificate => '/etc/ssl/influxdb.pem',
   }
 
   $snapshot = {
@@ -96,59 +96,59 @@ class influxdb::params {
 
   # Admin Section
   $admin = {
-  	enabled => true,
-  	bind-address => ':8083',
-  	https-enabled => false,
-  	https-certificate => '/etc/ssl/influxdb.pem',
+    enabled => true,
+    bind-address => ':8083',
+    https-enabled => false,
+    https-certificate => '/etc/ssl/influxdb.pem',
   }
   # Graphite Section
   $graphites = {
-  	enabled => false,
-  	bind-address => ':2003',
-  	protocol => 'tcp',
-  	consistency-level => 'one',
-  	separator => '.',
-  	batch-size => 1000,
-  	batch-timeout => '1s',
-  	templates => [],
-  	database  => 'graphite',
-  	tags  => [],
+    enabled => false,
+    bind-address => ':2003',
+    protocol => 'tcp',
+    consistency-level => 'one',
+    separator => '.',
+    batch-size => 1000,
+    batch-timeout => '1s',
+    templates => [],
+    database  => 'graphite',
+    tags  => [],
   }
 
   # Collectd Section
   $collectd = {
-  	enabled => false,
-  	bind-address => ':25826',
-  	database => 'collectd',
-  	typesdb => '/usr/share/collectd/types.db',
-  	batch-size => 5000,
-  	batch-timeout => '10s',
-  	retention-policy => '',
+    enabled => false,
+    bind-address => ':25826',
+    database => 'collectd',
+    typesdb => '/usr/share/collectd/types.db',
+    batch-size => 5000,
+    batch-timeout => '10s',
+    retention-policy => '',
   }
   # Opentsdb section
   $opentsdb = {
-  	enabled => false,
-  	bind-address => ':4242',
-  	database => 'opentsdb',
-  	retention-policy => '',
-  	consistency-level => 'one',
+    enabled => false,
+    bind-address => ':4242',
+    database => 'opentsdb',
+    retention-policy => '',
+    consistency-level => 'one',
   }
 
   # hinted-handoff Section
   $hh = {
-  	enabled => true,
-  	max-size => 1073741824,
-  	max-age => '168h0m0s',
-  	retry-rate-limit => 0,
+    enabled => true,
+    max-size => 1073741824,
+    max-age => '168h0m0s',
+    retry-rate-limit => 0,
    retry-interval => '1s'
   }
   # continuous_queries Section
   $cqueries = {
-  	enabled => true,
-  	recompute-previous-n => 2,
-  	recompute-no-older-than => '10m0s',
-  	compute-runs-per-interval => 10,
-  	compute-no-more-than => '2m0s',
+    enabled => true,
+    recompute-previous-n => 2,
+    recompute-no-older-than => '10m0s',
+    compute-runs-per-interval => 10,
+    compute-no-more-than => '2m0s',
   }
   # monitoring section
   $monitoring = {
@@ -163,8 +163,8 @@ class influxdb::params {
 
   # Shard precreation Section
   $shard_pc = {
-  	precreation-enabled => true,
-  	precreation-check-interval => '10m0s',
-  	precreation-advance-period => '30m0s',
+    precreation-enabled => true,
+    precreation-check-interval => '10m0s',
+    precreation-advance-period => '30m0s',
   }
 }
