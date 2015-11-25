@@ -55,7 +55,7 @@ class influxdb::params {
     election-timeout => '1s',
     heartbeat-timeout => '1s',
     leader-lease-timeout => '500ms',
-    commit-timeout => '50ms'
+    commit-timeout => '50ms',
   }
 
   # Data Sections
@@ -140,7 +140,7 @@ class influxdb::params {
     max-size => 1073741824,
     max-age => '168h0m0s',
     retry-rate-limit => 0,
-   retry-interval => '1s'
+    retry-interval => '1s',
   }
   # continuous_queries Section
   $cqueries = {
