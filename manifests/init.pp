@@ -11,7 +11,8 @@
 #                      Defaults to "http://s3.amazonaws.com/influxdb/influxdb_"
 #
 # [*package_suffix*] - Specify package source suffix
-#                      Defaults to _$arch.$package_provider (e.g. -1.x86_64.rpm or _amd64.deb)
+#                      Defaults to _$arch.$package_provider 
+#                      (e.g. -1.x86_64.rpm or _amd64.deb)
 #
 # [*package_ensure*] - Choose whether to install or uninstall
 #                      Defaults to present
@@ -41,7 +42,7 @@
 # [*conf_template*] - Specify template to use for influxdb conf file
 #                      Defaults to "influxdb.conf.erb"
 #
-# [*$section*] - Each section of the config file is a hash.  Defaults most easily surmised from params.pp
+# [*$section*] - Each section of the config file is a hash.
 #                      e.g.
 #                         $data = {
 #                             max-wal-size => 104857600,
