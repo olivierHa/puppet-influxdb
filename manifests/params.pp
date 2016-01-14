@@ -49,7 +49,7 @@ class influxdb::params {
   $reporting_disabled = false
 
   $meta = {
-    dir => "/var/opt/influxdb/meta",
+    dir => '/var/opt/influxdb/meta',
     hostname => 'localhost',
     bind-address => ':8088',
     retention-autocreate => true,
@@ -61,12 +61,12 @@ class influxdb::params {
 
   # Data Sections
   $data = {
-    dir => "/var/opt/influxdb/data",
-    wal-dir => "/var/opt/influxdb/wal",
+    dir => '/var/opt/influxdb/data',
+    wal-dir => '/var/opt/influxdb/wal',
     max-wal-size => 104857600,
     wal-flush-interval => '10m',
     wal-partition-flush-delay => '2s',
-   }
+  }
 
   # Cluster Section
   $cluster = {
@@ -135,12 +135,12 @@ class influxdb::params {
 
   # hinted-handoff Section
   $hh = {
-        dir => "/var/opt/influxdb/hh",
+        dir => '/var/opt/influxdb/hh',
         enabled => true,
         max-size => 1073741824,
         max-age => '168h0m0s',
         retry-rate-limit => 0,
-   retry-interval => '1s'
+        retry-interval => '1s'
   }
   # continuous_queries Section
   $cqueries = {
