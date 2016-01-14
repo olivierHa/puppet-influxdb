@@ -11,8 +11,7 @@
 #                      Defaults to "http://s3.amazonaws.com/influxdb/influxdb_"
 #
 # [*package_suffix*] - Specify package source suffix
-#                      Defaults to _$arch.$package_provider 
-#                      (e.g. -1.x86_64.rpm or _amd64.deb)
+#                      Defaults to _$arch.$package_provider (e.g. -1.x86_64.rpm or _amd64.deb)
 #
 # [*package_ensure*] - Choose whether to install or uninstall
 #                      Defaults to present
@@ -42,7 +41,7 @@
 # [*conf_template*] - Specify template to use for influxdb conf file
 #                      Defaults to "influxdb.conf.erb"
 #
-# [*$section*] - Each section of the config file is a hash.
+# [*$section*] - Each section of the config file is a hash.  Defaults most easily surmised from params.pp
 #                      e.g.
 #                         $data = {
 #                             max-wal-size => 104857600,
@@ -100,14 +99,10 @@ class influxdb (
   $http                   = $influxdb::params::http,
 
   # Admin Section
-
   $admin                  = $influxdb::params::admin,
 
-  # Snapshot Section
-  $snapshot               = $influxdb::params::snapshot,
-
   # Graphite Sections
-  $graphite_sections,
+  $graphite_sections      = undef,
   
   # hinted-handoff Section
   $hh                     = $influxdb::params::hh,
@@ -142,7 +137,6 @@ class influxdb (
   $admin_section = merge($admin, $::influxdb::params::admin)
   $hh_section = merge($hh, $::influxdb::params::hh)
   $cqueries_section = merge($cqueries, $::influxdb::params::cqueries)
-  $snapshot_section = merge($snapshot, $::influxdb::params::snapshot)
   $collectd_section = merge($collectd, $::influxdb::params::collectd)
   $opentsdb_section = merge($opentsdb, $::influxdb::params::opentsdb)
   $udp_section = merge($udp, $::influxdb::params::udp)

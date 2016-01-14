@@ -1,13 +1,11 @@
 ### Welcome to the InfluxDB configuration file.
 
-# Once every 24 hours InfluxDB will report anonymous data to m.influxdb.com
-# The data includes raft id (random 8 bytes), os, arch, version, and metadata.
-# We don't track ip addresses of servers reporting. This is only used
-# to track the number of instances running and the versions, which
-# is very helpful for us.
-# Change this option to true to disable reporting.
-<% @main_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
+<% @main_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 ###
@@ -18,8 +16,12 @@
 ###
 
 [meta]
-<% @meta_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
+<% @meta_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 
@@ -33,8 +35,12 @@
 ###
 
 [data]
-<% @data_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
+<% @data_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 ###
@@ -45,8 +51,12 @@
 ###
 
 [cluster]
-<% @cluster_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
+<% @cluster_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 ###
@@ -56,14 +66,22 @@
 ###
 
 [retention]
-<% @retention_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
+<% @retention_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 
 [shard-precreation]
-<% @shard_pc_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
+<% @shard_pc_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 ###
@@ -73,21 +91,14 @@
 ###
 
 [admin]
-<% @admin_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
+<% @admin_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
-###
-### [snapshot]
-###
-### Controls whether or not database snapshots are permitted
-###
-<% if scope['::influxdb::snapshot_section']%>
-[snapshot]
-<% @snapshot_section.sort_by{|key, value| key}.each do |key, value| %>
-     <%= key %> = <%= value %>
-  <% end %>
-<% end %>
 
 ###
 ### [http]
@@ -98,19 +109,23 @@
 
 [http]
 # TODO TOMORROW: Figure out how to loop through the hash values.
-<% @http_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
+<% @http_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 ###
 ### [[graphite]]
 ###
 ### Controls one or many listeners for Graphite data.
 ###
-<% if scope['::influxdb::graphite_sections'] %>
+<% unless @graphite_sections.nil? %>
    <% graphite_section = scope['::influxdb::graphite_sections'] %>
       <% graphite_section.sort_by{|key, value| key}.each do |section| %>
-   [[graphite]]
-      <%= section %>
+[[graphite]]
+  <%= section %>
    <% end %>
 <% end %>
 
@@ -121,8 +136,12 @@
 ###
 
 [collectd]
-<% @collectd_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
+<% @collectd_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 ###
@@ -132,8 +151,12 @@
 ###
 
 [opentsdb]
-<% @opentsdb_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
+<% @opentsdb_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 ###
@@ -143,8 +166,12 @@
 ###
 
 [[udp]]
-<% @udp_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
+<% @udp_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 ###
@@ -152,9 +179,13 @@
 ###
 <% if scope['::influxdb::monitoring_section'] %>
 [monitoring]
-  <% @monitoring_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
-  <% end %>
+<% @monitoring_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
 <% end %>
 
 ###
@@ -164,8 +195,12 @@
 ###
 
 [continuous_queries]
-<% @cqueries_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
+<% @cqueries_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 ###
@@ -177,7 +212,11 @@
 ###
 <% if scope['::influxdb::hh_section'] %>
 [hinted-handoff]
-  <% @hh_section.sort_by{|key, value| key}.each do |key, value| %>
-  <%= key %> = <%= value %>
-  <% end %>
+<% @hh_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
 <% end %>
