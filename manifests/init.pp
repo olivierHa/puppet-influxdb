@@ -53,7 +53,7 @@
 # === Examples
 #
 #  class { influxdb:
-#    package_version  => '0.9.6.1',
+#    package_version  => '0.9.6',
 #  }
 #
 # === Authors

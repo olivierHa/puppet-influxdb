@@ -15,8 +15,8 @@
 
 ##Overview
 
-The influxdb module lets you use Puppet to install, configure, and manage Influxdb, version > 0.9.x.
-The current InfluxDB version is 0.9.2
+The influxdb module lets you use Puppet to install, configure, and manage Influxdb, version > 0.10.x
+The current InfluxDB version is 0.10
 
 ##Module Description
 
@@ -51,27 +51,41 @@ If your server can't connect directly to Internet, let's use a proxy :
 
 ##Usage
 
-To enable Graphite plugin
+To enable Graphite plugin : 
 
 ~~~puppet
   class { 'influxdb': 
-    graphite_enable => true,
+    graphite => {
+     main => {
+        enabled => true,
+     }
+    }
   }
 ~~~
+
+With InfluxDB, you can configure several graphite backends.
 
 ####A more complex example
 
 ~~~puppet
   class { 'influxdb': 
-    graphite_enabled       => true,
-    graphite_database      => 'mygraphitedb',
-    graphite_batch_size    => 500,
-    graphite_batch_timeout => "1s",
-    graphite_tags          => ['region=us-east', 'zone=1c'],
-    graphite_templates     => [
-     "servers.* .host.measurement*",
-     "stats.* .host.measurement* region=us-west,agent=sensu",
-     ]
+    graphite => {
+     main => {
+        enabled => true,
+        database      => 'mygraphitedb',
+        batch_size    => 500,
+        tags          => ['region=us-east', 'zone=1c'],
+        templates     => [
+           "servers.* .host.measurement*",
+           "stats.* .host.measurement* region=us-west,agent=sensu",
+        ]
+     },
+     udp => {
+        enabled => true,
+        bind-address => ':20003',
+        protocol => 'udp',
+     }
+    }
   }
 ~~~
 
@@ -79,7 +93,9 @@ To enable Collectd plugin:
 
 ~~~puppet
   class { 'influxdb': 
-    collectd_enabled => true,
+    collectd => {  
+      enabled => true,
+    }
   }
 ~~~
 
@@ -195,6 +211,8 @@ This module has been tested on:
 It should also work on Debian-based OS (Ubuntu) and RedHat osfamily
 
 This module is fully compatible with Puppet 3.x and Puppet 4.x
+
+Providers work without authentication/authorization (work in progress)
 
 ## Contributing
 
