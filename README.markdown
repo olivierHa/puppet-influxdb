@@ -79,7 +79,7 @@ To enable Collectd plugin:
 
 ~~~puppet
   class { 'influxdb': 
-    collectd_enable => true,
+    collectd_enabled => true,
   }
 ~~~
 
