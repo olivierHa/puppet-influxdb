@@ -1,12 +1,12 @@
 ### Welcome to the InfluxDB configuration file.
 
-# Once every 24 hours InfluxDB will report anonymous data to m.influxdb.com
-# The data includes raft id (random 8 bytes), os, arch, version, and metadata.
-# We don't track ip addresses of servers reporting. This is only used
-# to track the number of instances running and the versions, which
-# is very helpful for us.
-# Change this option to true to disable reporting.
-reporting-disabled = <%= scope.lookupvar('influxdb::reporting_disabled') %>
+<% @main_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
 
 ###
 ### [meta]
@@ -16,18 +16,13 @@ reporting-disabled = <%= scope.lookupvar('influxdb::reporting_disabled') %>
 ###
 
 [meta]
-  dir = "<%= @meta_dir %>"
-  hostname = "<%= scope.lookupvar('influxdb::meta_influxdb_hostname') %>"
-  bind-address = "<%= scope.lookupvar('influxdb::meta_bind_address') %>"
-  retention-autocreate = <%= scope.lookupvar('influxdb::meta_retention_autocreate') %>
-  election-timeout = "<%= scope.lookupvar('influxdb::meta_election_timeout') %>"
-  heartbeat-timeout = "<%= scope.lookupvar('influxdb::meta_heartbeat_timeout') %>"
-  leader-lease-timeout = "<%= scope.lookupvar('influxdb::meta_leader_lease_timeout') %>"
-  commit-timeout = "<%= scope.lookupvar('influxdb::meta_commit_timeout') %>"
-  <% meta_peers = scope.lookupvar('influxdb::meta_peers')
-  if meta_peers and meta_peers != [] -%>
-peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
-  <% end -%>
+<% @meta_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
 
 
 ###
@@ -40,12 +35,13 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ###
 
 [data]
-  dir = "<%= @data_dir %>"
-  max-wal-size = <%= scope.lookupvar('influxdb::data_max_wal_size') %> # Maximum size the WAL can reach before a flush. Defaults to 100MB.
-  wal-flush-interval = "<%= scope.lookupvar('influxdb::data_wal_flush_interval') %>"  # Maximum time data can sit in WAL before a flush.
-  wal-partition-flush-delay = "<%= scope.lookupvar('influxdb::data_wal_partition_flush_delay') %>" # The delay time between each WAL partition being flushed.
-  wal-dir = "<%= @wal_dir %>"
-  wal-enable-logging = true
+<% @data_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
 
 ###
 ### [cluster]
@@ -55,8 +51,13 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ###
 
 [cluster]
-  shard-writer-timeout = "<%= scope.lookupvar('influxdb::cluster_shard_writer_timeout') %>"
-  write-timeout = "<%= scope.lookupvar('influxdb::cluster_write_timeout') %>"
+<% @cluster_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
 
 ###
 ### [retention]
@@ -65,17 +66,23 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ###
 
 [retention]
-  enabled = <%= scope.lookupvar('influxdb::retention_enabled') %>
-  check-interval = "<%= scope.lookupvar('influxdb::retention_check_interval') %>"
-<% if scope.lookupvar('influxdb::meta_peers') and scope.lookupvar('influxdb::meta_peers') != [] -%>
-  replication = <%= scope.lookupvar('influxdb::retention_replication') %>
+<% @retention_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 
 [shard-precreation]
-  enabled = <%= scope.lookupvar('influxdb::shard_precreation_enabled') %>
-  check-interval = "<%= scope.lookupvar('influxdb::shard_precreation_check_interval') %>"
-  advance-period = "<%= scope.lookupvar('influxdb::shard_precreation_advance_period') %>"
+<% @shard_pc_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
 
 ###
 ### [admin]
@@ -84,19 +91,14 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ###
 
 [admin]
-  enabled = <%= scope.lookupvar('influxdb::admin_enabled') %>
-  bind-address = "<%= scope.lookupvar('influxdb::admin_bind_address') %>"
-  https-enabled = <%= scope.lookupvar('influxdb::admin_https_enabled') %>
-  https-certificate = "<%= scope.lookupvar('influxdb::admin_https_certificate') %>"
+<% @admin_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
 
-###
-### [snapshot]
-###
-### Controls whether or not database snapshots are permitted
-###
-
-[snapshot]
-  enabled = <%= scope.lookupvar('influxdb::snapshot_enabled') %>
 
 ###
 ### [http]
@@ -106,61 +108,26 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ###
 
 [http]
-  enabled = <%= scope.lookupvar('influxdb::http_enabled') %>
-  bind-address = "<%= scope.lookupvar('influxdb::http_bind_address') %>"
-  auth-enabled = <%= scope.lookupvar('influxdb::http_auth_enabled') %>
-  log-enabled = <%= scope.lookupvar('influxdb::http_log_enabled') %>
-  write-tracing = <%= scope.lookupvar('influxdb::http_write_tracing') %>
-  pprof-enabled = <%= scope.lookupvar('influxdb::http_pprof_enabled') %>
-  https-enabled = <%= scope.lookupvar('influxdb::http_https_enabled') %>
-  https-certificate = "<%= scope.lookupvar('influxdb::http_https_certificate') %>"
-
-
+# TODO TOMORROW: Figure out how to loop through the hash values.
+<% @http_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
 ###
 ### [[graphite]]
 ###
 ### Controls one or many listeners for Graphite data.
 ###
-
+<% unless @graphite_sections.nil? %>
+   <% graphite_section = scope['::influxdb::graphite_sections'] %>
+      <% graphite_section.sort_by{|key, value| key}.each do |section| %>
 [[graphite]]
-  enabled = <%= scope.lookupvar('influxdb::graphite_enabled') %>
-  database = "<%= scope.lookupvar('influxdb::graphite_database') %>"
-  bind-address = "<%= scope.lookupvar('influxdb::graphite_bind_address') %>"
-  protocol = "<%= scope.lookupvar('influxdb::graphite_protocol') %>"
-  consistency-level = "<%= scope.lookupvar('influxdb::graphite_consistency_level') %>"
-  separator = "<%= scope.lookupvar('influxdb::graphite_separator') %>"
-  batch-size = <%= scope.lookupvar('influxdb::graphite_batch_size') %>
-  batch-timeout = "<%= scope.lookupvar('influxdb::graphite_batch_timeout') %>"
-
-  ### Default tags that will be added to all metrics.  These can be overridden at the template level
-  ### or by tags extracted from metric
-  # tags = ["region=us-east", "zone=1c"]
-
-<% graphite_tags = scope.lookupvar('influxdb::graphite_tags')
-  if graphite_tags and graphite_tags != [] %>
-  tags = [ <% graphite_tags.each do |tag| -%> "<%= tag %>", ] <% end -%>
-<% end -%>
-
-
-  ### Each template line requires a template pattern.  It can have an optional
-  ### filter before the template and separated by spaces.  It can also have optional extra
-  ### tags following the template.  Multiple tags should be separated by commas and no spaces
-  ### similar to the line protocol format.  The can be only one default template.
-  # templates = [
-  #   "*.app env.service.resource.measurement",
-  #   # Default template
-  #   "server.*",
- #]
-
-<% graphite_template = scope.lookupvar('influxdb::graphite_templates')
-   if graphite_template != [] -%>
-   templates = [
-   <% graphite_template.each do |template| -%>
-   "<%= template %>",
-<% end -%>
-   ]
-<% end -%>
-
+  <%= section %>
+   <% end %>
+<% end %>
 
 ###
 ### [collectd]
@@ -169,14 +136,12 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ###
 
 [collectd]
-  enabled = <%= scope.lookupvar('influxdb::collectd_enabled') %>
-  bind-address = "<%= scope.lookupvar('influxdb::collectd_bind_address') %>"
-  database = "<%= scope.lookupvar('influxdb::collectd_database') %>"
-  typesdb = "<%= scope.lookupvar('influxdb::collectd_typesdb') %>"
-  batch_size = <%= scope.lookupvar('influxdb::collectd_batch_size') %>
-  batch-timeout = "<%= scope.lookupvar('influxdb::collectd_batch_timeout') %>"
-<% if scope.lookupvar('influxdb::collectd_retention_policy') and scope.lookupvar('influxdb::collectd_retention_policy') != '' %>
-  retention-policy = "<%= scope.lookupvar('influxdb::collectd_retention_policy') %>"
+<% @collectd_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 ###
@@ -186,12 +151,12 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ###
 
 [opentsdb]
-  enabled = <%= scope.lookupvar('influxdb::opentsdb_enabled') %>
-  bind-address = "<%= scope.lookupvar('influxdb::opentsdb_bind_address') %>"
-  database = "<%= scope.lookupvar('influxdb::opentsdb_database') %>"
-  consistency-level = "<%= scope.lookupvar('influxdb::opentsdb_consistency_level') %>"
-<% if scope.lookupvar('influxdb::opentsdb_retention_policy') and scope.lookupvar('influxdb::opentsdb_retention_policy') != '' %>
-  retention-policy = "<%= scope.lookupvar('influxdb::opentsdb_retention_policy') %>"
+<% @opentsdb_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
 <% end %>
 
 ###
@@ -201,19 +166,27 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ###
 
 [[udp]]
-  enabled = false
-  # bind-address = ""
-  # database = ""
-  # batch-size = 0
-  # batch-timeout = "0"
+<% @udp_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
 
 ###
 ### [monitoring]
 ###
-
+<% if scope['::influxdb::monitoring_section'] %>
 [monitoring]
-  enabled = <%= scope.lookupvar('influxdb::monitoring_enabled') %>
-  write-interval = "<%= scope.lookupvar('influxdb::monitoring_write_interval') %>"
+<% @monitoring_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
+<% end %>
 
 ###
 ### [continuous_queries]
@@ -222,11 +195,13 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ###
 
 [continuous_queries]
-  enabled = <%= scope.lookupvar('influxdb::cqueries_enabled') %>
-  recompute-previous-n = <%= scope.lookupvar('influxdb::cqueries_recompute_previous_n') %>
-  recompute-no-older-than = "<%= scope.lookupvar('influxdb::cqueries_recompute_no_older_than') %>"
-  compute-runs-per-interval = <%= scope.lookupvar('influxdb::cqueries_compute_runs_per_interval') %>
-  compute-no-more-than = "<%= scope.lookupvar('influxdb::cqueries_compute_no_more_than') %>"
+<% @cqueries_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
 
 ###
 ### [hinted-handoff]
@@ -235,11 +210,13 @@ peers = [ <% meta_peers.each do |peer| -%> "<%= peer %>", <% end -%> ]
 ### store queued data when one node of a cluster is down for a short period
 ### of time.
 ###
-
+<% if scope['::influxdb::hh_section'] %>
 [hinted-handoff]
-  enabled = <%= scope.lookupvar('influxdb::hh_enabled') %>
-  dir = "<%= @hh_dir %>"
-  max-size = <%= scope.lookupvar('influxdb::hh_max_size') %>
-  max-age = "<%= scope.lookupvar('influxdb::hh_max_age') %>"
-  retry-rate-limit = <%= scope.lookupvar('influxdb::hh_retry_rate_limit') %>
-  retry-interval = "<%= scope.lookupvar('influxdb::hh_retry_interval') %>"
+<% @hh_section.sort_by{|key, value| key}.each do |key, value| %><%
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+  %>  <%= key %> = <%= value %><%
+    else
+  %>  <%= key %> = "<%= value %>"<% 
+  end %>
+<% end %>
+<% end %>

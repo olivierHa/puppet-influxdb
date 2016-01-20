@@ -11,7 +11,7 @@ class influxdb::params {
   $influxdb_user = 'influxdb'
   $influxdb_group = 'influxdb'
   $package_ensure = 'present'
-  $package_version = '0.9.3'
+  $package_version = '0.9.4'
   $service_name = 'influxdb'
 
   case $::osfamily {
@@ -48,100 +48,124 @@ class influxdb::params {
 
   $reporting_disabled = false
 
-  $meta_influxdb_hostname = 'localhost'
-  $meta_bind_address = ':8088'
-  $meta_retention_autocreate = true
-  $meta_election_timeout = '1s'
-  $meta_heartbeat_timeout = '1s'
-  $meta_leader_lease_timeout = '500ms'
-  $meta_commit_timeout = '50ms'
-  $meta_peers = []
+  $meta = {
+    dir => '/var/opt/influxdb/meta',
+    hostname => 'localhost',
+    bind-address => ':8088',
+    retention-autocreate => true,
+    election-timeout => '1s',
+    heartbeat-timeout => '1s',
+    leader-lease-timeout => '500ms',
+    commit-timeout => '50ms'
+  }
 
   # Data Sections
-  $data_max_wal_size = 104857600
-  $data_wal_flush_interval = '10m'
-  $data_wal_partition_flush_delay = '2s'
+  $data = {
+    dir => '/var/opt/influxdb/data',
+    wal-dir => '/var/opt/influxdb/wal',
+    max-wal-size => 104857600,
+    wal-flush-interval => '10m',
+    wal-partition-flush-delay => '2s',
+  }
 
   # Cluster Section
-  $cluster_shard_writer_timeout = '5s'
-  $cluster_write_timeout = '5s'
+  $cluster = {
+    shard-writer-timeout => '5s',
+    write-timeout => '5s',
+  }
 
   # Retention Section
-  $retention_enabled = true
-  $retention_check_interval = '10m'
-  $retention_replication = 3
+  $retention = {
+    enabled => true,
+    check-interval => '10m',
+    replication => 3,
+  }
 
   # Http Section
-
-  $http_enabled = true
-  $http_bind_address = ':8086'
-  $http_log_enabled = true
-  $http_auth_enabled = false
-  $http_write_tracing = false
-  $http_pprof_enabled = false
-  $http_https_enabled = false
-  $http_https_certificate = '/etc/ssl/influxdb.pem'
+  $http = {
+        enabled => true,
+        bind-address => ':8086',
+        log-enabled => true,
+        auth-enabled => false,
+        write-tracing => false,
+        pprof-enabled => false,
+        https-enabled => false,
+        https-certificate => '/etc/ssl/influxdb.pem',
+  }
 
   # Admin Section
-
-  $admin_enabled = true
-  $admin_bind_address = ':8083'
-  $admin_https_enabled = false
-  $admin_https_certificate = '/etc/ssl/influxdb.pem'
-
-  # Snapshot Section
-  $snapshot_enabled = false
-
+  $admin = {
+        enabled => true,
+        bind-address => ':8083',
+        https-enabled => false,
+        https-certificate => '/etc/ssl/influxdb.pem',
+  }
   # Graphite Section
-  $graphite_enabled = false
-  $graphite_bind_address = ':2003'
-  $graphite_protocol = 'tcp'
-  $graphite_consistency_level = 'one'
-  $graphite_separator = '.'
-  $graphite_batch_size = 1000
-  $graphite_batch_timeout = '1s'
-  $graphite_templates = []
-  $graphite_database  = 'graphite'
-  $graphite_tags  = []
+  $graphites = {
+        enabled => false,
+        bind-address => ':2003',
+        protocol => 'tcp',
+        consistency-level => 'one',
+        separator => '.',
+        batch-size => 1000,
+        batch-timeout => '1s',
+        templates => [],
+        database  => 'graphite',
+        tags  => [],
+  }
 
   # Collectd Section
-  $collectd_enabled = false
-  $collectd_bind_address = ':25826'
-  $collectd_database = 'collectd'
-  $collectd_typesdb = '/usr/share/collectd/types.db'
-  $collectd_batch_size = 5000
-  $collectd_batch_timeout = '10s'
-  $collectd_retention_policy = ''
-
+  $collectd = {
+        enabled => false,
+        bind-address => ':25826',
+        database => 'collectd',
+        typesdb => '/usr/share/collectd/types.db',
+        batch-size => 5000,
+        batch-timeout => '10s',
+        retention-policy => '',
+  }
   # Opentsdb section
-  $opentsdb_enabled = false
-  $opentsdb_bind_address = ':4242'
-  $opentsdb_database = 'opentsdb'
-  $opentsdb_retention_policy = ''
-  $opentsdb_consistency_level = 'one'
-  
+  $opentsdb = {
+        enabled => false,
+        bind-address => ':4242',
+        database => 'opentsdb',
+        retention-policy => '',
+        consistency-level => 'one',
+  }
 
   # hinted-handoff Section
-  $hh_enabled = true
-  $hh_max_size = 1073741824
-  $hh_max_age = '168h0m0s'
-  $hh_retry_rate_limit = 0
-  $hh_retry_interval= '1s'
-
+  $hh = {
+        dir => '/var/opt/influxdb/hh',
+        enabled => true,
+        max-size => 1073741824,
+        max-age => '168h0m0s',
+        retry-rate-limit => 0,
+        retry-interval => '1s'
+  }
   # continuous_queries Section
-  $cqueries_enabled = true
-  $cqueries_recompute_previous_n = 2
-  $cqueries_recompute_no_older_than = '10m0s'
-  $cqueries_compute_runs_per_interval = 10
-  $cqueries_compute_no_more_than = '2m0s'
-
+  $cqueries = {
+        enabled => true,
+        recompute-previous-n => 2,
+        recompute-no-older-than => '10m0s',
+        compute-runs-per-interval => 10,
+        compute-no-more-than => '2m0s',
+  }
   # monitoring section
-  $monitoring_enabled = true
-  $monitoring_write_interval = '1m0s'
-  
-  # Shard precreation Section
-  $shard_precreation_enabled = true
-  $shard_precreation_check_interval = '10m0s'
-  $shard_precreation_advance_period = '30m0s'
+  $monitoring = {
+    enabled => true,
+    write-interval => '1m0s',
+  }
 
+  # udp section
+  $udp = {
+    enabled => false,
+  }
+
+  # Shard precreation Section
+  $shard_pc = {
+        precreation-enabled => true,
+        precreation-check-interval => '10m0s',
+        precreation-advance-period => '30m0s',
+  }
 }
+

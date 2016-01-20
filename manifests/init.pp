@@ -5,59 +5,62 @@
 # === Parameters
 #
 # [*package_version*] - Specify influxdb version
-#                      Defaults to "0.9.2"
-# ['max-wal-size']   - Maximum size the WAL can reach before a flush.
-#                      Defaults to "100MB"
-# ['wal-flush-interval']  - Maximum time data can sit in WAL before a flush.
-#                      Defaults to "10m"
-# ['wal-partition-flush-delay'] - The delay time between each WAL partition being flushed.
-#                      Defaults to "2s"
-# ['cluster_shard_writer_timeout'] - The time within which a shard must respond to write.
-#                      Defaults to "5s"
-# ['cluster_write_timeout'] - The time within which a write operation must complete on the cluster.
-#                      Defaults to "5s"
-# ['graphite_enabled'] - Use graphite plugin
-#                     Defaults to false
-# ['graphite_bind_address'] - Bind address for graphite plugin
-#                     Defaults to "::2003"
-# ['graphite_protocol'] - Graphite Protocol
-#                     Defaults to "tcp"
-# ['graphite_database'] - Graphite Database
-#                         Defaults to "graphite"
-# ['graphite_batch_size'] - Graphite batch size
-#                           Defaults to 0
-# ['graphite_batch_timeout'] - Graphite batch timeout
-#                              Defaults to "10s"
-# ['graphite_consistency_level'] - Default write consistency for the Graphite input 
-#                                  Defaults to "one"
-# ['graphite_separator'] - If matching multiple measurement files, this string will be used to join the matched values.
-#                          Defaults to .
-# ['graphite_tags'] - Graphite tags
-#                     Defaults to []
-# ['graphite_templates'] - Graphite templates 
-#                          Defaults to []
-# ['collectd_enabled'] - Use collectd plugin
-#                        Defaults to false
-# ['hh_max_size'] - Default maximum size of all hinted handoff queues in bytes
-#                   Defaults to 1024 * 1024 * 1024
-# ['hh_max_age'] - Default maximum amount of time that a hinted handoff write can stay in the queue.  After this time, the write will be purged
-#                  Defaults to 7 * 24 h
-# ['hh_retry_rate_limit'] - Default rate that hinted handoffs will be retried. The rate is in bytes per second and applies across all nodes when retried. 
-#                           A value of 0 disables the rate limit
-#                           Defaults to 0
-# ['hh_retry_interval'] - Default amout of time the system waits before attempting to flush hinted handoff queues
-#                         Defaults to 1s
+#                      Defaults to "0.9.4"
+#
+# [*package_source*] - Specify package source prefix
+#                      Defaults to "http://s3.amazonaws.com/influxdb/influxdb_"
+#
+# [*package_suffix*] - Specify package source suffix
+#                      Defaults to _$arch.$package_provider (e.g. -1.x86_64.rpm or _amd64.deb)
+#
+# [*package_ensure*] - Choose whether to install or uninstall
+#                      Defaults to present
+#
+# [*package_dldir*] - Choose where the package is downloaded
+#                      Defaults to "/opt"
+#
+# [*service_name*] - Specify service name 
+#                      Defaults to "influxdb"
+#
+# [*proxy_http*] - Specify http proxy for package download
+#                      Defaults to undef
+#
+# [*config_file*] - Full path to config file (e.g. /etc/influxdb/influxdb.conf)
+#                    NOTE: This does not create directories.
+#                      Defaults to "/etc/opt/influxdb/influxdb.conf"
+#
+# [*influxdb_user*] - User influxdb will run as (will also create user)
+#                      Defaults to "influxdb"
+#
+# [*influxdb_group*] - Group influxdb will run as (will also create user)
+#                      Defaults to "influxdb"
+#
+# [*influxdb_group*] - Specify http proxy for package download
+#                      Defaults to undef
+#
+# [*conf_template*] - Specify template to use for influxdb conf file
+#                      Defaults to "influxdb.conf.erb"
+#
+# [*$section*] - Each section of the config file is a hash.  Defaults most easily surmised from params.pp
+#                      e.g.
+#                         $data = {
+#                             max-wal-size => 104857600,
+#                             wal-flush-interval => '10m',
+#                             wal-partition-flush-delay => '2s',
+#                          }
+#                       This data may also be pulled in from hiera
 #
 # === Examples
 #
 #  class { influxdb:
-#    package_version  => '0.9.2',
+#    package_version  => '0.9.4',
 #    graphite_enabled => true,
 #  }
 #
 # === Authors
 #
 # Olivier Hanesse <olivier.hanesse@gmail.com>
+# Ashton Davis <acidrainfall@gmail.com>
 #
 # === Copyright
 #
@@ -78,106 +81,66 @@ class influxdb (
   $conf_template                  = $influxdb::params::conf_template,
 
   # Configuration Parameters
-  $reporting_disabled             = $influxdb::params::reporting_disabled,
-  $storage_dir                    = $influxdb::params::storage_dir,
+  $main                   = $influxdb::params::main,
 
   # Meta Section
-  $meta_influxdb_hostname         = $influxdb::params::meta_influxdb_hostname,
-  $meta_bind_address              = $influxdb::params::meta_bind_address,
-  $meta_retention_autocreate      = $influxdb::params::meta_retention_autocreate,
-  $meta_election_timeout          = $influxdb::params::meta_election_timeout,
-  $meta_heartbeat_timeout         = $influxdb::params::meta_heartbeat_timeout,
-  $meta_leader_lease_timeout      = $influxdb::params::meta_leader_lease_timeout,
-  $meta_commit_timeout            = $influxdb::params::meta_commit_timeout,
-  $meta_peers                     = $influxdb::params::meta_peers,
+  $meta                   = $influxdb::params::meta,
 
   # Data Section
-  $data_max_wal_size              = $influxdb::params::data_max_wal_size,
-  $data_wal_flush_interval        = $influxdb::params::data_wal_flush_interval,
-  $data_wal_partition_flush_delay = $influxdb::params::data_wal_partition_flush_delay,
+  $data                   = $influxdb::params::data,
 
   # Cluster Section
-  $cluster_shard_writer_timeout   = $influxdb::params::cluster_shard_writer_timeout,
-  $cluster_write_timeout          = $influxdb::params::cluster_write_timeout,
+  $cluster                = $influxdb::params::cluster,
 
   # Retention Section
-  $retention_enabled              = $influxdb::params::retention_enabled,
-  $retention_check_interval       = $influxdb::params::retention_check_interval,
-  $retention_replication          = $influxdb::params::retention_replication,
+  $retention              = $influxdb::params::retention,
 
   # Http Section
-  $http_enabled                   = $influxdb::params::http_enabled,
-  $http_bind_address              = $influxdb::params::http_bind_address,
-  $http_log_enabled               = $influxdb::params::http_log_enabled,
-  $http_auth_enabled              = $influxdb::params::http_auth_enabled,
-  $http_write_tracing             = $influxdb::params::http_write_tracing,
-  $http_pprof_enabled             = $influxdb::params::http_pprof_enabled,
-  $http_https_enabled             = $influxdb::params::http_https_enabled,
-  $http_https_certificate         = $influxdb::params::http_https_certificate,
+  $http                   = $influxdb::params::http,
 
   # Admin Section
-  $admin_enabled                  = $influxdb::params::admin_enabled,
-  $admin_bind_address             = $influxdb::params::admin_bind_address,
-  $admin_https_enabled            = $influxdb::params::admin_https_enabled,
-  $admin_https_certificate        = $influxdb::params::admin_https_certificate,
+  $admin                  = $influxdb::params::admin,
 
-  # Snapshot Section
-  $snapshot_enabled               = $influxdb::params::snapshot_enabled,
-
-  # Graphite Section
-  $graphite_enabled               = $influxdb::params::graphite_enabled,
-  $graphite_bind_address          = $influxdb::params::graphite_bind_address,
-  $graphite_protocol              = $influxdb::params::graphite_protocol,
-  $graphite_consistency_level     = $influxdb::params::graphite_consistency_level,
-  $graphite_separator             = $influxdb::params::graphite_separator,
-  $graphite_batch_size            = $influxdb::params::graphite_batch_size,
-  $graphite_batch_timeout         = $influxdb::params::graphite_batch_timeout,
-  $graphite_templates             = $influxdb::params::graphite_templates,
-  $graphite_database              = $influxdb::params::graphite_database,
-  $graphite_tags                  = $influxdb::params::graphite_tags,
-
+  # Graphite Sections
+  $graphite_sections      = undef,
+  
   # hinted-handoff Section
-  $hh_enabled                     = $influxdb::params::hh_enabled,
-  $hh_max_size                    = $influxdb::params::hh_max_size,
-  $hh_max_age                     = $influxdb::params::hh_max_age,
-  $hh_retry_rate_limit            = $influxdb::params::hh_retry_rate_limit,
-  $hh_retry_interval              = $influxdb::params::hh_retry_interval,
+  $hh                     = $influxdb::params::hh,
 
   # continuous_queries Section
-  $cqueries_enabled                   = $influxdb::params::cqueries_enabled,
-  $cqueries_recompute_previous_n      = $influxdb::params::cqueries_recompute_previous_n,
-  $cqueries_recompute_no_older_than   = $influxdb::params::cqueries_recompute_no_older_than,
-  $cqueries_compute_runs_per_interval = $influxdb::params::cqueries_compute_runs_per_interval,
-  $cqueries_compute_no_more_than      = $influxdb::params::cqueries_compute_no_more_than,
+  $cqueries               = $influxdb::params::cqueries,
 
   # Monitoring Section
-  $monitoring_enabled                 = $influxdb::params::monitoring_enabled,
-  $monitoring_write_interval          = $influxdb::params::monitoring_write_interval,
+  $monitoring             = $influxdb::params::monitoring,
 
   # collectd
-  $collectd_enabled                   = $influxdb::params::collectd_enabled,
-  $collectd_bind_address              = $influxdb::params::collectd_bind_address,
-  $collectd_database                  = $influxdb::params::collectd_database,
-  $collectd_typesdb                   = $influxdb::params::collectd_typesdb,
-  $collectd_batch_size                = $influxdb::params::collectd_batch_size,
-  $collectd_batch_timeout             = $influxdb::params::collectd_batch_timeout,
-  $collectd_retention_policy          = $influxdb::params::collectd_retention_policy,
+  $collectd               = $influxdb::params::collectd,
 
   # Opentsdb section
-  $opentsdb_enabled                   = $influxdb::params::opentsdb_enabled,
-  $opentsdb_bind_address              = $influxdb::params::opentsdb_bind_address,
-  $opentsdb_database                  = $influxdb::params::opentsdb_database,
-  $opentsdb_retention_policy          = $influxdb::params::opentsdb_retention_policy,
-  $opentsdb_consistency_level         = $influxdb::params::opentsdb_consistency_level,
+  $opentsdb               = $influxdb::params::opentsdb,
+
+  # UDP Section
+  $udp                  = $influxdb::params::udp,
 
   # Shard Precreation
-  $shard_precreation_enabled          = $influxdb::params::shard_precreation_enabled,
-  $shard_precreation_check_interval   = $influxdb::params::shard_precreation_check_interval,
-  $shard_precreation_advance_period   = $influxdb::params::shard_precreation_advance_period,
+  $shard_pc                  = $influxdb::params::shard_pc
 
 ) inherits ::influxdb::params {
 
   # validate parameters here
+  $main_section = merge($main, $::influxdb::params::main)
+  $meta_section = merge($meta, $::influxdb::params::meta)
+  $data_section = merge($data, $::influxdb::params::data)
+  $cluster_section = merge($cluster, $::influxdb::params::cluster)
+  $retention_section = merge($retention, $::influxdb::params::retention)
+  $http_section = merge($http, $::influxdb::params::http)
+  $admin_section = merge($admin, $::influxdb::params::admin)
+  $hh_section = merge($hh, $::influxdb::params::hh)
+  $cqueries_section = merge($cqueries, $::influxdb::params::cqueries)
+  $collectd_section = merge($collectd, $::influxdb::params::collectd)
+  $opentsdb_section = merge($opentsdb, $::influxdb::params::opentsdb)
+  $udp_section = merge($udp, $::influxdb::params::udp)
+  $shard_pc_section = merge($shard_pc, $::influxdb::params::shard_pc)
 
   class { '::influxdb::install': } ->
   class { '::influxdb::config': } ~>
