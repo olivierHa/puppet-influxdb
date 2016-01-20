@@ -41,19 +41,19 @@ describe '::influxdb', :type => :class do
         :operatingsystemrelease => '7.8',
       }
     end
-    it { is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with(
+    it { is_expected.to contain_file("/etc/influxdb/influxdb.conf").with(
         'ensure'  => 'present',
         'owner'   => 'influxdb',
         'group'   => 'influxdb',
         'mode'    => '0644',
     ) }
     it do 
-      is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/var/opt/influxdb/meta"}
-      is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/var/opt/influxdb/hh"}
-      is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/var/opt/influxdb/data"}
-      is_expected.to contain_file("/var/opt/influxdb/meta")
-      is_expected.to contain_file("/var/opt/influxdb/hh")
-      is_expected.to contain_file("/var/opt/influxdb/data")
+      is_expected.to contain_file("/etc/influxdb/influxdb.conf").with_content %r{dir = "/var/lib/influxdb/meta"}
+      is_expected.to contain_file("/etc/influxdb/influxdb.conf").with_content %r{dir = "/var/lib/influxdb/hh"}
+      is_expected.to contain_file("/etc/influxdb/influxdb.conf").with_content %r{dir = "/var/lib/influxdb/data"}
+      is_expected.to contain_file("/var/lib/influxdb/meta")
+      is_expected.to contain_file("/var/lib/influxdb/hh")
+      is_expected.to contain_file("/var/lib/influxdb/data")
     end
   end
 
@@ -69,9 +69,9 @@ describe '::influxdb', :type => :class do
       { :storage_dir => '/data/influxdb' }
     end
     it do 
-      is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/meta"}
-      is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/hh"}
-      is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/data"}
+      is_expected.to contain_file("/etc/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/meta"}
+      is_expected.to contain_file("/etc/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/hh"}
+      is_expected.to contain_file("/etc/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/data"}
       is_expected.to contain_file("/data/influxdb/meta")
       is_expected.to contain_file("/data/influxdb/hh")
       is_expected.to contain_file("/data/influxdb/data")
@@ -91,7 +91,7 @@ describe '::influxdb', :type => :class do
         :data_max_wal_size => '1024000',  
       }
     end
-    it { is_expected.to contain_file("/etc/opt/influxdb/influxdb.conf").with_content %r{max-wal-size = 1024000} }
+    it { is_expected.to contain_file("/etc/influxdb/influxdb.conf").with_content %r{max-wal-size = 1024000} }
   end
 
 end
