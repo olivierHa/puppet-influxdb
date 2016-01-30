@@ -93,6 +93,7 @@ class influxdb (
   $udp                    = {},
   $shard_precreation      = {},
   $snapshot               = {},
+  $subscriber             = {},
 ) inherits ::influxdb::params {
 
   # validate parameters

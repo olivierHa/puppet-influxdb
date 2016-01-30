@@ -216,5 +216,10 @@ class influxdb::params {
     enabled => false,
   }
 
+  # subscriber section
+  $subscriber = {
+    enabled => true,
+  }
+
 }
 

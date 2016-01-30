@@ -20,6 +20,7 @@ class influxdb::config (
   $udp_section = merge($::influxdb::params::udp, $::influxdb::udp)
   $shard_precreation_section = merge($::influxdb::params::shard_precreation, $::influxdb::shard_precreation)
   $snapshot_section = merge($::influxdb::params::snapshot, $::influxdb::snapshot)
+  $subscriber_section = merge($::influxdb::params::subscriber, $::influxdb::subscriber)
 
   if $::influxdb::graphite != {} {
     if $::influxdb::ignore_default_graphite {
