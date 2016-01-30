@@ -29,7 +29,6 @@ class influxdb::config (
       $graphites_section = $::influxdb::graphite
     }
     else {
-      notify{"coucuo":}
       $graphites_section = merge($::influxdb::params::graphite,$::influxdb::graphite)
     }
   } else {

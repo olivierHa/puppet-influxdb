@@ -139,7 +139,7 @@ class influxdb::params {
   }
 
   # Graphite Section
-  $graphite = { 
+  $graphite = {
       main => {
         enabled => false,
         bind-address => ':2003',
@@ -152,7 +152,7 @@ class influxdb::params {
         database  => 'graphite',
         tags  => [],
       },
-   }
+  }
 
   # Collectd Section
   $collectd = {
