@@ -31,13 +31,6 @@ class influxdb::config (
     $graphites_section = $::influxdb::params::graphite
   }
 
-#  file { $::influxdb::storage_dir:
-#    ensure => directory,
-#    owner  => $::influxdb::influxdb_user,
-#    group  => $::influxdb::influxdb_group,
-#    mode   => '0750',
-#  }
-
   $data_dir = $data_section['dir']
   $meta_dir = $meta_section['dir']
   $hh_dir   = $hh_section['dir']

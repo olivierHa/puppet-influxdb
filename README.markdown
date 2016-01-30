@@ -131,36 +131,61 @@ influxdb::data:
 Every configuration option of influxdb is managed by this module. 
 Puppet variables can't contain hyphens, so they are replaced by an underscore to match influxdb variables ; puppet variables got a prefix to avoid collision too.
 
-####`package_name`
-
-String
-
 ####`package_ensure`
+Choose whether to install or uninstall. Default: present
 
 ####`package_source`
+Specify package source prefix. Defaults to "http://s3.amazonaws.com/influxdb/influxdb_"
 
 ####`package_suffix`
+Specify package source suffix. Defaults to _$arch.$package_provider (e.g. -1.x86_64.rpm or _amd64.deb)
 
 ####`package_version`
+Default: '0.10.0-0.rc1'
 
 ####`package_dldir`
-
-####`package_source`
+Choose where the package is downloaded. Defaults to "/opt"
 
 ####`service_name`
+Specify service name. Defaults to "influxdb"
 
 ####`proxy_http`
+Specify http proxy for package download. Defaults to undef
 
 ####`config_file`
+Full path to config file (e.g. /etc/influxdb/influxdb.conf). Defaults to "/etc/influxdb/influxdb.conf"
 
 ####`influxdb_user`
+Ownership of influxdb directories. (Don't set user that will run influxdb ... yet) Default: 'influxdb'
 
 ####`influxdb_group`
+Group of influxdb directories. Default: 'influxdb'
 
 ####`conf_template`
+Specify template to use for influxdb conf file. Defaults to "influxdb/influxdb.conf.erb"
 
 ####`Section Hashes`
-Each config file section accepts a hash of values.  There are also defaults set in params.pp.
+
+Each config file section accepts a hash of values. Defaults are set in params.pp
+
+~~~puppet
+
+  $meta = {
+    dir => '/var/lib/influxdb/meta',
+    hostname => 'localhost',
+    bind-address => ':8088',
+    retention-autocreate => true,
+    election-timeout => '1s',
+    heartbeat-timeout => '1s',
+    leader-lease-timeout => '500ms',
+    commit-timeout => '50ms',
+    cluster-tracing => false,
+    raft-promotion-enabled => true,
+    logging-enabled => true,
+  }
+~~~
+
+
 
 ###Defined Types
 

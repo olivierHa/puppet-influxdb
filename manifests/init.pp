@@ -29,14 +29,11 @@
 #                    NOTE: This does not create directories.
 #                      Defaults to "/etc/influxdb/influxdb.conf"
 #
-# [*influxdb_user*] - User influxdb will run as (will also create user)
+# [*influxdb_user*] - Ownership of influxdb directories. (Don't set user that will run influxdb ... yet)
 #                      Defaults to "influxdb"
 #
-# [*influxdb_group*] - Group influxdb will run as (will also create user)
+# [*influxdb_group*] - Group of influxdb directories
 #                      Defaults to "influxdb"
-#
-# [*influxdb_group*] - Specify http proxy for package download
-#                      Defaults to undef
 #
 # [*conf_template*] - Specify template to use for influxdb conf file
 #                      Defaults to "influxdb.conf.erb"
@@ -53,7 +50,7 @@
 # === Examples
 #
 #  class { influxdb:
-#    package_version  => '0.9.6',
+#    package_version  => '0.10.0',
 #  }
 #
 # === Authors
@@ -79,7 +76,7 @@ class influxdb (
   $influxdb_group                 = $influxdb::params::influxdb_group,
   $conf_template                  = $influxdb::params::conf_template,
   $ignore_default_graphite        = $influxdb::params::ignore_default_graphite,
-  # Configuration Parameters
+  # Custom configuration parameters
   $main                   = {},
   $meta                   = {},
   $data                   = {},
