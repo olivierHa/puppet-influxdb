@@ -52,8 +52,14 @@ class influxdb::params {
 
   $reporting_disabled = false
   $ignore_default_graphite = false
+  
+  # Main Section
+  $main = {
+    reporting-disabled => false,
+    dir => '/var/lib/influxdb',
+  }
 
-  # Meta Sections
+  # Meta Section
   $meta = {
     dir => '/var/lib/influxdb/meta',
     hostname => 'localhost',
@@ -204,6 +210,11 @@ class influxdb::params {
 
   # udp section
   $udp = {
+    enabled => false,
+  }
+ 
+  # snapshot section
+  $snapshot = {
     enabled => false,
   }
 

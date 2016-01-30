@@ -92,6 +92,7 @@ class influxdb (
   $opentsdb               = {},
   $udp                    = {},
   $shard_precreation      = {},
+  $snapshot               = {},
 ) inherits ::influxdb::params {
 
   # validate parameters
@@ -110,6 +111,7 @@ class influxdb (
   validate_hash($opentsdb)
   validate_hash($udp)
   validate_hash($shard_precreation)
+  validate_hash($snapshot)
 
   class { '::influxdb::install': } ->
   class { '::influxdb::config': } ~>
