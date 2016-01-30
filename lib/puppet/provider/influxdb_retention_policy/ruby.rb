@@ -1,7 +1,7 @@
 Puppet::Type.type(:influxdb_retention_policy).provide(:ruby) do
   desc 'Manages InfluxDB retention policy.'
 
-commands :influx_cli => '/opt/influxdb/influx'
+commands :influx_cli => '/usr/bin/influx'
 
   mk_resource_methods
 

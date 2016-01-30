@@ -1,7 +1,7 @@
 Puppet::Type.type(:influxdb_database).provide(:ruby) do
   desc 'Manages InfluxDB databases.'
 
-  commands :influx_cli => '/opt/influxdb/influx'
+  commands :influx_cli => '/usr/bin/influx'
 
   def initialize(value={})
     super(value)
