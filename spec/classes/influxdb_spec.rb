@@ -45,7 +45,7 @@ describe '::influxdb', :type => :class do
         'ensure'  => 'present',
         'owner'   => 'influxdb',
         'group'   => 'influxdb',
-        'mode'    => '0644',
+        'mode'    => '0640',
     ) }
     it do 
       is_expected.to contain_file("/etc/influxdb/influxdb.conf").with_content %r{dir = "/var/lib/influxdb/meta"}
@@ -57,7 +57,7 @@ describe '::influxdb', :type => :class do
     end
   end
 
-  context "when declaring another storage dir" do
+  context "when declaring another dir" do
     let :facts do
       {
         :osfamily => 'Debian',
@@ -65,9 +65,17 @@ describe '::influxdb', :type => :class do
         :operatingsystemrelease => '7.8',
       }
     end
-    let :params do
-      { :storage_dir => '/data/influxdb' }
-    end
+    let(:params) { {
+      :data => {
+         'dir' => '/data/influxdb/data', 
+      },
+      :meta => {
+         'dir' => '/data/influxdb/meta', 
+      },
+      :hh => {
+         'dir' => '/data/influxdb/hh', 
+      },
+    } }
     it do 
       is_expected.to contain_file("/etc/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/meta"}
       is_expected.to contain_file("/etc/influxdb/influxdb.conf").with_content %r{dir = "/data/influxdb/hh"}
@@ -87,8 +95,7 @@ describe '::influxdb', :type => :class do
       }
     end
     let :params do
-      {
-        :data_max_wal_size => '1024000',  
+      {   :data => { 'max-wal-size' => '1024000'} 
       }
     end
     it { is_expected.to contain_file("/etc/influxdb/influxdb.conf").with_content %r{max-wal-size = 1024000} }

@@ -3,16 +3,12 @@
 # This class is called from influxdb
 #
 class influxdb::config (
-  $data_dir = "${influxdb::storage_dir}/data",
-  $meta_dir = "${influxdb::storage_dir}/meta",
-  $hh_dir   = "${influxdb::storage_dir}/hh",
-  $wal_dir  = "${influxdb::storage_dir}/wal",
 ) {
 
   $main_section = merge($::influxdb::params::main, $::influxdb::main)
   $meta_section = merge($::influxdb::params::meta, $::influxdb::meta)
-  $data_section = merge($::influxdb::data, $::influxdb::params::data)
-  $cluster_section = merge($::influxdb::cluster, $::influxdb::params::cluster)
+  $data_section = merge($::influxdb::params::data, $::influxdb::data)
+  $cluster_section = merge($::influxdb::params::cluster, $::influxdb::cluster)
   $retention_section = merge($::influxdb::params::retention, $::influxdb::retention)
   $http_section = merge($::influxdb::params::http, $::influxdb::http)
   $admin_section = merge($::influxdb::params::admin, $::influxdb::admin)
@@ -35,12 +31,17 @@ class influxdb::config (
     $graphites_section = $::influxdb::params::graphite
   }
 
-  file { $::influxdb::storage_dir:
-    ensure => directory,
-    owner  => $::influxdb::influxdb_user,
-    group  => $::influxdb::influxdb_group,
-    mode   => '0750',
-  }
+#  file { $::influxdb::storage_dir:
+#    ensure => directory,
+#    owner  => $::influxdb::influxdb_user,
+#    group  => $::influxdb::influxdb_group,
+#    mode   => '0750',
+#  }
+
+  $data_dir = $data_section['dir']
+  $meta_dir = $meta_section['dir']
+  $hh_dir   = $hh_section['dir']
+  $wal_dir  = $data_section['wal-dir']
 
   file { $meta_dir:
     ensure => directory,
@@ -74,7 +75,7 @@ class influxdb::config (
     ensure  => $::influxdb::package_ensure,
     owner   => $::influxdb::influxdb_user,
     group   => $::influxdb::influxdb_group,
-    mode    => '0644',
+    mode    => '0640',
     content => template($::influxdb::conf_template),
   }
 
