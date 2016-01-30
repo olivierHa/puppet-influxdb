@@ -1,3 +1,8 @@
+2016-01-30 Release 0.5.0
+- Update to Influxdb 0.10 rc1
+- Refactoring of the module. Now every section is hash that can be merged with a custom hash. 
+- Support of multiple Graphite sections
+
 2015-08-27 Release 0.4.2
 - Influxdb 0.9.3
 

@@ -1,8 +1,8 @@
 {
   "name": "olivierHa-influxdb",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "author": "Olivier Hanesse",
-  "summary": "Puppet module to manage InfluxDB > 0.9.x and its plugins like graphite or collectd",
+  "summary": "Puppet module to manage InfluxDB > 0.9 or 0.10 and its plugins like graphite or collectd",
   "license": "Apache-2.0",
   "source": "https://github.com/olivierHa/puppet-influxdb",
   "project_page": "https://github.com/olivierHa/puppet-influxdb",

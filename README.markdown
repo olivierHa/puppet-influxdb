@@ -15,8 +15,8 @@
 
 ##Overview
 
-The influxdb module lets you use Puppet to install, configure, and manage Influxdb, version > 0.10.x
-The current InfluxDB version is 0.10
+The influxdb module lets you use Puppet to install, configure, and manage Influxdb, version > 0.8 (so 0.9.x and 0.10.x)
+The current InfluxDB version is 0.10 (rc1)
 
 ##Module Description
 
@@ -99,29 +99,16 @@ To enable Collectd plugin:
   }
 ~~~
 
-For a clustering setup : 
-
-~~~puppet
-  class { 'influxdb': 
-    meta_peers => [
-      'IP_address_A:bind_address_port_A',
-      'IP_address_B:bind_address_port_B',
-      'IP_address_C:bind_address_port_C',
-      ]
-  }
-~~~
-
 ####Hiera example
 
 ```yaml
-influxdb::package_version: '0.9.2'
-influxdb::graphite_enabled: true
-influxdb::graphite_batch_size: 500,
-influxdb::retention_replication: 3
-influxdb::meta_peers:
- - 'IP_address_A:bind_address_port_A'
- - 'IP_address_B:bind_address_port_B'
- - 'IP_address_C:bind_address_port_C'
+influxdb::package_version: '0.10.0'
+influxdb::graphite:
+ main:
+   enabled: true
+   batch_size: 3
+influxdb::data:
+  dir: '/mnt/influxdb/data'
 ```
 
 ##Reference
@@ -206,6 +193,7 @@ influxdb_retention_policy { '1w@graphite':
 This module has been tested on:
 
  - Debian 7 Wheezy
+ - Debian 8 Jessie
  - CentOS 6.7
 
 It should also work on Debian-based OS (Ubuntu) and RedHat osfamily
@@ -221,5 +209,5 @@ tracker](https://github.com/olivierHa/puppet-influxdb/issues)
 
 ##Development
 
- - Validation of given parameters
  - rspec and beaker tests
+ - authentication/authorization for provider
