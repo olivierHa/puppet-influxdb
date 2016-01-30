@@ -128,8 +128,32 @@ influxdb::data:
 
 ###Parameters
 
-Every configuration option of influxdb is managed by this module. 
-Puppet variables can't contain hyphens, so they are replaced by an underscore to match influxdb variables ; puppet variables got a prefix to avoid collision too.
+As InfluxDB is moving quickly, this module has a "dynamic" structure.
+Each section of the Influxdb configuration file is mapped to a hash.
+So you can easily add/remove new parameters as the influxdb software evolves, without change this module.
+
+####`Section Hashes`
+
+Each config file section accepts a hash of values. Defaults are set in params.pp
+
+Here are the default values for the meta section :
+
+~~~puppet
+
+  $meta = {
+    dir => '/var/lib/influxdb/meta',
+    hostname => 'localhost',
+    bind-address => ':8088',
+    retention-autocreate => true,
+    election-timeout => '1s',
+    heartbeat-timeout => '1s',
+    leader-lease-timeout => '500ms',
+    commit-timeout => '50ms',
+    cluster-tracing => false,
+    raft-promotion-enabled => true,
+    logging-enabled => true,
+  }
+~~~
 
 ####`package_ensure`
 Choose whether to install or uninstall. Default: present
@@ -163,29 +187,6 @@ Group of influxdb directories. Default: 'influxdb'
 
 ####`conf_template`
 Specify template to use for influxdb conf file. Defaults to "influxdb/influxdb.conf.erb"
-
-####`Section Hashes`
-
-Each config file section accepts a hash of values. Defaults are set in params.pp
-
-~~~puppet
-
-  $meta = {
-    dir => '/var/lib/influxdb/meta',
-    hostname => 'localhost',
-    bind-address => ':8088',
-    retention-autocreate => true,
-    election-timeout => '1s',
-    heartbeat-timeout => '1s',
-    leader-lease-timeout => '500ms',
-    commit-timeout => '50ms',
-    cluster-tracing => false,
-    raft-promotion-enabled => true,
-    logging-enabled => true,
-  }
-~~~
-
-
 
 ###Defined Types
 
