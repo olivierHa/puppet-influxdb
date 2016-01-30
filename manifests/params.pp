@@ -210,7 +210,7 @@ class influxdb::params {
   $udp = {
     enabled => false,
   }
- 
+
   # snapshot section
   $snapshot = {
     enabled => false,
