@@ -46,11 +46,9 @@ class influxdb::params {
   }
 
   # Configuration options
-  $storage_dir = '/var/lib/influxdb'
   $config_file = '/etc/influxdb/influxdb.conf'
   $conf_template = 'influxdb/influxdb.conf.erb'
 
-  $reporting_disabled = false
   $ignore_default_graphite = false
   
   # Main Section
