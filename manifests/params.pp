@@ -11,7 +11,7 @@ class influxdb::params {
   $influxdb_user = 'influxdb'
   $influxdb_group = 'influxdb'
   $package_ensure = 'present'
-  $package_version = '0.10.0-0.beta1'
+  $package_version = '0.10.0-0.rc1'
   $service_name = 'influxdb'
 
   case $::osfamily {
