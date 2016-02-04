@@ -5,14 +5,10 @@
 #
 class influxdb::params {
 
-  # Install options
-  $proxy_http = undef
-  $package_dldir = '/opt'
+  $manage_repo   = true
   $influxdb_user = 'influxdb'
   $influxdb_group = 'influxdb'
   $package_ensure = 'present'
-  $package_version = '0.10.0-0.rc1'
-  $service_name = 'influxdb'
 
   case $::osfamily {
     'Debian': {
@@ -54,7 +50,6 @@ class influxdb::params {
   # Main Section
   $main = {
     reporting-disabled => false,
-    dir => '/var/lib/influxdb',
   }
 
   # Meta Section

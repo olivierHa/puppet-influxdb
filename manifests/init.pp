@@ -4,26 +4,8 @@
 #
 # === Parameters
 #
-# [*package_version*] - Specify influxdb version
-#                      Defaults to "0.10.0"
-#
-# [*package_source*] - Specify package source prefix
-#                      Defaults to "http://s3.amazonaws.com/influxdb/influxdb_"
-#
-# [*package_suffix*] - Specify package source suffix
-#                      Defaults to _$arch.$package_provider (e.g. -1.x86_64.rpm or _amd64.deb)
-#
 # [*package_ensure*] - Choose whether to install or uninstall
 #                      Defaults to present
-#
-# [*package_dldir*] - Choose where the package is downloaded
-#                      Defaults to "/opt"
-#
-# [*service_name*] - Specify service name 
-#                      Defaults to "influxdb"
-#
-# [*proxy_http*] - Specify http proxy for package download
-#                      Defaults to undef
 #
 # [*config_file*] - Full path to config file (e.g. /etc/influxdb/influxdb.conf)
 #                    NOTE: This does not create directories.
@@ -65,12 +47,7 @@
 class influxdb (
   # Installation parameters
   $package_ensure                 = $influxdb::params::package_ensure,
-  $package_source                 = $influxdb::params::package_source,
-  $package_suffix                 = $influxdb::params::package_suffix,
-  $package_version                = $influxdb::params::package_version,
-  $package_dldir                  = $influxdb::params::package_dldir,
-  $service_name                   = $influxdb::params::service_name,
-  $proxy_http                     = $influxdb::params::proxy_http,
+  $manage_repo                    = $influxdb::params::manage_repo,
   $config_file                    = $influxdb::params::config_file,
   $influxdb_user                  = $influxdb::params::influxdb_user,
   $influxdb_group                 = $influxdb::params::influxdb_group,
@@ -114,6 +91,9 @@ class influxdb (
   validate_hash($shard_precreation)
   validate_hash($snapshot)
 
+  if $manage_repo {
+    class { '::influxdb::repo': }
+  }
   class { '::influxdb::install': } ->
   class { '::influxdb::config': } ~>
   class { '::influxdb::service': } ->
