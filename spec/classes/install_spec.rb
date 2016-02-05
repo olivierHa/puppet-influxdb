@@ -5,8 +5,10 @@ describe 'influxdb', :type => :class do
     let :facts do
       {
         :osfamily => 'Debian',
+        :lsbdistid => 'Debian',
         :operatingsystem => 'Debian',
         :operatingsystemrelease => '7.8',
+        :lsbdistcodename => 'wheezy',
       }
     end
    it do

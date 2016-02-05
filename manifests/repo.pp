@@ -14,6 +14,7 @@ class influxdb::repo (
           default => Fail['Operating system or release version not supported.'],
         }
         $rpm_gpgkey = 'https://repos.influxdata.com/influxdb.key'
+
         yumrepo { 'influxdb':
           descr    => 'InfluxDB Repository - RHEL',
           baseurl  => $rpm_url,

@@ -1,25 +1,45 @@
 require 'spec_helper'
 
 describe '::influxdb', :type => :class do
-  context 'supported operating systems' do
-    ['Debian', 'RedHat'].each do |osfamily|
-      describe "influxdb class without any parameters on #{osfamily}" do
+  context 'Debian default parameters' do
+      describe "influxdb class without any parameters on Debian" do
         let(:params) {{ }}
         let(:facts) {{
-          :osfamily => osfamily,
+          :osfamily => 'Debian',
+          :operatingsystem => 'Debian',
+          :lsbdistid => 'Debian',
+          :operatingsystemrelease => '7.8',
+          :lsbdistcodename => 'wheezy',
         }}
 
         it { should compile.with_all_deps }
-
         it { should contain_class('influxdb::params') }
         it { should contain_class('influxdb::install').that_comes_before('influxdb::config') }
         it { should contain_class('influxdb::config') }
         it { should contain_class('influxdb::service').that_subscribes_to('influxdb::config') }
-
         it { should contain_service('influxdb') }
         it { should contain_package('influxdb').with_ensure('present') }
       end
-    end
+  end
+
+  context 'RedHat default parameters' do
+      describe "influxdb class without any parameters on RedHat" do
+        let(:params) {{ }}
+        let(:facts) {{
+          :osfamily => 'RedHat',
+          :operatingsystem => 'RedHat',
+          :operatingsystemrelease => '6',
+          :lsbdistid => 'RedHat',
+        }}
+
+        it { should compile.with_all_deps }
+        it { should contain_class('influxdb::params') }
+        it { should contain_class('influxdb::install').that_comes_before('influxdb::config') }
+        it { should contain_class('influxdb::config') }
+        it { should contain_class('influxdb::service').that_subscribes_to('influxdb::config') }
+        it { should contain_service('influxdb') }
+        it { should contain_package('influxdb').with_ensure('present') }
+      end
   end
 
   context 'unsupported operating system' do
@@ -38,7 +58,9 @@ describe '::influxdb', :type => :class do
       {
         :osfamily => 'Debian',
         :operatingsystem => 'Debian',
+        :lsbdistid => 'Debian',
         :operatingsystemrelease => '7.8',
+        :lsbdistcodename => 'wheezy',
       }
     end
     it { is_expected.to contain_file("/etc/influxdb/influxdb.conf").with(
@@ -62,7 +84,9 @@ describe '::influxdb', :type => :class do
       {
         :osfamily => 'Debian',
         :operatingsystem => 'Debian',
+        :lsbdistid => 'Debian',
         :operatingsystemrelease => '7.8',
+        :lsbdistcodename => 'wheezy',
       }
     end
     let(:params) { {
@@ -90,8 +114,10 @@ describe '::influxdb', :type => :class do
     let :facts do
       {
         :osfamily => 'Debian',
+        :lsbdistid => 'Debian',
         :operatingsystem => 'Debian',
         :operatingsystemrelease => '7.8',
+        :lsbdistcodename => 'wheezy',
       }
     end
     let :params do
