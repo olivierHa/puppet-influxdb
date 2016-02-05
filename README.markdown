@@ -15,13 +15,13 @@
 
 ##Overview
 
-The influxdb module lets you use Puppet to install, configure, and manage Influxdb, version > 0.8 (so 0.9.x and 0.10.x)
-The current InfluxDB version is 0.10 (rc1)
+The influxdb module lets you use Puppet to install, configure, and manage Influxdb version 0.10.x and 0.9.x
+The current InfluxDB version is 0.10
 
 ##Module Description
 
 InfluxDB is a Open source distributed time series, events, and metrics database. 
-This module handles the installation (currently via downloading the package from influxdb website) and every configuration parameters.
+This module handles the installation  and every configuration parameters.
 
 Support for Puppet 3.x and Puppet 4.x
 
@@ -33,14 +33,6 @@ To install InfluxDB with the default parameters
 
 ~~~puppet
   class { 'influxdb': }
-~~~
-
-If your server can't connect directly to Internet, let's use a proxy :
-
-~~~puppet
-  class { 'influxdb': 
-    proxy_http => 'http://squid:3128',
-  }
 ~~~
 
 ###What influxdb affects
@@ -102,7 +94,7 @@ To enable Collectd plugin:
 ####Hiera example
 
 ```yaml
-influxdb::package_version: '0.10.0'
+influxdb::package_ensure: 'latest'
 influxdb::graphite:
  main:
    enabled: true
@@ -156,25 +148,10 @@ Here are the default values for the meta section :
 ~~~
 
 ####`package_ensure`
-Choose whether to install or uninstall. Default: present
+Choose whether to install or uninstall, or force to the latest version. Default: present
 
-####`package_source`
-Specify package source prefix. Defaults to "http://s3.amazonaws.com/influxdb/influxdb_"
-
-####`package_suffix`
-Specify package source suffix. Defaults to _$arch.$package_provider (e.g. -1.x86_64.rpm or _amd64.deb)
-
-####`package_version`
-Default: '0.10.0-0.rc1'
-
-####`package_dldir`
-Choose where the package is downloaded. Defaults to "/opt"
-
-####`service_name`
-Specify service name. Defaults to "influxdb"
-
-####`proxy_http`
-Specify http proxy for package download. Defaults to undef
+####`manage_repo`
+Choose whether to configure influxdb repositories. Default: true
 
 ####`config_file`
 Full path to config file (e.g. /etc/influxdb/influxdb.conf). Defaults to "/etc/influxdb/influxdb.conf"
@@ -220,9 +197,8 @@ This module has been tested on:
 
  - Debian 7 Wheezy
  - Debian 8 Jessie
- - CentOS 6.7
 
-It should also work on Debian-based OS (Ubuntu) and RedHat osfamily
+It **should** also work on Debian-based OS (Ubuntu) and RedHat osfamily
 
 This module is fully compatible with Puppet 3.x and Puppet 4.x
 

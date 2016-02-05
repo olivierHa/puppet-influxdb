@@ -6,18 +6,8 @@
 #
 # Actions:
 #   - Manage Influxdb service
-#
-# Requires:
-#
-# Sample Usage:
-#
-#    sometype { 'foo':
-#      notify => Class['influxdb::service'],
-#    }
-#
-#
 class influxdb::service (
-  $service_name    = $::influxdb::service_name,
+  $service_name    = 'influxdb',
   $service_enable  = true,
   $service_ensure  = 'running',
   $service_manage  = true,
