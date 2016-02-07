@@ -67,7 +67,7 @@ class influxdb::config (
   }
 
   file { $::influxdb::config_file:
-    ensure  => file,
+    ensure  => present,
     owner   => $::influxdb::influxdb_user,
     group   => $::influxdb::influxdb_group,
     mode    => '0640',
