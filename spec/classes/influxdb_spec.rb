@@ -64,7 +64,7 @@ describe '::influxdb', :type => :class do
       }
     end
     it { is_expected.to contain_file("/etc/influxdb/influxdb.conf").with(
-        'ensure'  => 'present',
+        'ensure'  => 'file',
         'owner'   => 'influxdb',
         'group'   => 'influxdb',
         'mode'    => '0640',
