@@ -67,11 +67,11 @@ class influxdb::config (
   }
 
   file { $::influxdb::config_file:
-    ensure  => $::influxdb::package_ensure,
+    ensure  => file,
     owner   => $::influxdb::influxdb_user,
     group   => $::influxdb::influxdb_group,
-    mode    => '0640',
     content => template($::influxdb::conf_template),
+    mode    => '0640',
   }
 
 }
