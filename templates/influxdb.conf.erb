@@ -2,7 +2,7 @@
 
 
 <% @main_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -18,7 +18,7 @@
 
 [meta]
 <% @meta_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -37,7 +37,7 @@
 
 [data]
 <% @data_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d\.]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d\.]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -53,7 +53,7 @@
 
 [cluster]
 <% @cluster_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -68,7 +68,7 @@
 
 [retention]
 <% @retention_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -78,7 +78,7 @@
 
 [shard-precreation]
 <% @shard_precreation_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -93,7 +93,7 @@
 
 [admin]
 <% @admin_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -110,7 +110,7 @@
 
 [http]
 <% @http_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -140,7 +140,7 @@
 
 [collectd]
 <% @collectd_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -155,7 +155,7 @@
 
 [opentsdb]
 <% @opentsdb_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -170,7 +170,7 @@
 
 [[udp]]
 <% @udp_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -182,7 +182,7 @@
 ###
 [monitor]
 <% @monitor_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -197,7 +197,7 @@
 
 [continuous_queries]
 <% @continuous_queries_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -213,7 +213,7 @@
 ###
 [hinted-handoff]
 <% @hh_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -225,7 +225,7 @@
 ###
 [snapshot]
 <% @snapshot_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
@@ -237,7 +237,7 @@
 ###
 [subscriber]
 <% @subscriber_section.sort_by{|key, value| key}.each do |key, value| %><%
-    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
+    if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
     else
   %>  <%= key %> = "<%= value %>"<% 
