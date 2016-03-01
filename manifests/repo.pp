@@ -29,7 +29,7 @@ class influxdb::repo (
         ensure_resource('package', 'apt-transport-https', {'ensure' => 'present' })
 
         apt::key { 'influxdb':
-          key         => '2582E0C5',
+          key         => '05CE15085FC09D18E99EFB22684A14CF2582E0C5',
           key_content => template('influxdb/aptkey.erb'),
         }
 
