@@ -21,7 +21,7 @@ commands :influx_cli => '/usr/bin/influx'
     databases = dbs.split("\n")[3..-1]
 
     databases.collect do |db|
-      begin 
+      begin
         output = influx_cli(['-execute', "show retention policies on #{db}"].compact)
       rescue Puppet::ExecutionFailure => e
         Puppet.debug("#show retention policies had an error -> #{e.inspect}")
@@ -89,7 +89,7 @@ commands :influx_cli => '/usr/bin/influx'
   end
 
   def self.duration_to_s(dur)
-    re = /^(\d+w)?(\d+d)?(\d+h)?(\d+m)?(\d+s)?$/
+    re = /^(\d+w)?(\d+d)?(\d+h)?(\d+m)?(\d+s?)?$/
     match = dur.match re
     if match
       val = 0
