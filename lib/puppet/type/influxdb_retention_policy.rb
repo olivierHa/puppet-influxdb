@@ -21,7 +21,7 @@ Puppet::Type.newtype(:influxdb_retention_policy) do
   end
 
   def duration_to_s(dur)
-    re = /^(\d+w)?(\d+d)?(\d+h)?(\d+m)?(\d+s)?$/
+    re = /^(\d+w)?(\d+d)?(\d+h)?(\d+m)?(\d+s?)?$/
     match = dur.match re
     if match
       val = 0
@@ -35,12 +35,12 @@ Puppet::Type.newtype(:influxdb_retention_policy) do
     return nil
   end
 
-  newproperty(:database,) do
+  newproperty(:database) do
     desc "Database retention"
     newvalues(/^\S+$/)
   end
 
-  newproperty(:duration,) do
+  newproperty(:duration) do
     desc "Duration of retention, format is <INT>w<INT>d<INT>h<INT>s"
     newvalues(/^(\d+w)?(\d+d)?(\d+h)?(\d+m)?(\d+s)?$/)
 
@@ -49,8 +49,8 @@ Puppet::Type.newtype(:influxdb_retention_policy) do
     end
 
   end
- 
-  newproperty(:replication,) do
+
+  newproperty(:replication) do
     desc "Number of replication"
     newvalues(/^\d+$/)
   end

@@ -16,9 +16,9 @@ Puppet::Type.type(:influxdb_database).provide(:ruby) do
     end
     databases = output.split("\n")[3..-1]
     databases.collect do |name|
-      new(:name    => name,
+      new({:name    => name,
         :ensure  => :present,
-      )
+      })
     end
   end
 
