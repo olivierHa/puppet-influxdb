@@ -14,9 +14,9 @@ describe '::influxdb', :type => :class do
 
         it { should compile.with_all_deps }
         it { should contain_class('influxdb::params') }
-        it { should contain_class('influxdb::install').that_comes_before('influxdb::config') }
+        it { should contain_class('influxdb::install').that_comes_before('class[influxdb::config]') }
         it { should contain_class('influxdb::config') }
-        it { should contain_class('influxdb::service').that_subscribes_to('influxdb::config') }
+        it { should contain_class('influxdb::service').that_subscribes_to('class[influxdb::config]') }
         it { should contain_service('influxdb') }
         it { should contain_package('influxdb').with_ensure('present') }
       end
@@ -34,9 +34,9 @@ describe '::influxdb', :type => :class do
 
         it { should compile.with_all_deps }
         it { should contain_class('influxdb::params') }
-        it { should contain_class('influxdb::install').that_comes_before('influxdb::config') }
+        it { should contain_class('influxdb::install').that_comes_before('class[influxdb::config]') }
         it { should contain_class('influxdb::config') }
-        it { should contain_class('influxdb::service').that_subscribes_to('influxdb::config') }
+        it { should contain_class('influxdb::service').that_subscribes_to('class[influxdb::config]') }
         it { should contain_service('influxdb') }
         it { should contain_package('influxdb').with_ensure('present') }
       end
