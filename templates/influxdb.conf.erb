@@ -123,13 +123,21 @@
 ###
 <% @graphites_section.sort_by{|key, value| key}.each do |key, graphite_section| %>
 [[graphite]]
-<% graphite_section.sort_by{|key, value| key}.each do |key, value| %><%
-  if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float)
-  %>  <%= key %> = <%= value %><%
-  elsif value.is_a?(Array)
-  %>  <%= key %> = <%= value.inspect %><%
-  else 
-  %>  <%= key %> = "<%= value %>"<% 
+<% graphite_section.sort_by{|key, value| key}.each do |key, value| -%>
+<% if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) -%>
+    <%= key %> = <%= value %>
+<% elsif value.is_a?(Array) -%>
+<% if value.empty? -%>
+    <%= key %> = []
+<% else -%>
+    <%= key %> = [
+<% value.each do |val| -%>
+      "<%= val %>",
+<% end -%>
+    ]
+<% end -%>
+<% else -%>
+    <%= key %> = "<%= value %>"<%
   end %>
 <% end %>
 <% end %>
