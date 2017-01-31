@@ -76,7 +76,7 @@ class influxdb::params {
     wal-partition-flush-delay => '2s',
     wal-dir => '/var/lib/influxdb/wal',
     wal-logging-enabled => true,
-    data-logging-enabled => true,
+    trace-logging-enabled => true,
     wal-compaction-threshold => 0.5,
     wal-max-series-size => 1048576,
     wal-flush-cold-interval => '5s',

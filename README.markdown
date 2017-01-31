@@ -15,8 +15,16 @@
 
 ##Overview
 
-The influxdb module lets you use Puppet to install, configure, and manage Influxdb version 0.10.x and 0.9.x
-The current InfluxDB version is 0.10
+The influxdb module lets you use Puppet to install, configure, and manage Influxdb version 1.0.0+
+The current InfluxDB version is 1.2.0
+
+## Deprecation Warning
+
+InfluxDB 1.0.0 contains [breaking changes](https://github.com/influxdata/influxdb/blob/master/CHANGELOG.md#v100-2016-09-08)
+which require changing the `data-logging-enabled` config attribute to `trace-logging-enabled`.
+The other configuration changes are managed by the `influxdb.conf.erb` template already.
+
+If you are using an older version of InfluxDB, you will need to use version 0.5.0 of this module
 
 ##Module Description
 

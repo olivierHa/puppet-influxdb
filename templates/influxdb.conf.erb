@@ -45,13 +45,13 @@
 <% end %>
 
 ###
-### [cluster]
+### [coordinator]
 ###
 ### Controls non-Raft cluster behavior, which generally includes how data is
 ### shared across shards.
 ###
 
-[cluster]
+[coordinator]
 <% @cluster_section.sort_by{|key, value| key}.each do |key, value| %><%
     if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
@@ -143,12 +143,12 @@
 <% end %>
 
 ###
-### [collectd]
+### [[collectd]]
 ###
 ### Controls the listener for collectd data.
 ###
 
-[collectd]
+[[collectd]]
 <% @collectd_section.sort_by{|key, value| key}.each do |key, value| %><%
     if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
@@ -158,12 +158,12 @@
 <% end %>
 
 ###
-### [opentsdb]
+### [[opentsdb]]
 ###
 ### Controls the listener for OpenTSDB data.
 ###
 
-[opentsdb]
+[[opentsdb]]
 <% @opentsdb_section.sort_by{|key, value| key}.each do |key, value| %><%
     if ( value =~ /^[\d]+$/ ) || value.is_a?(Integer) || value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(Float) || value.is_a?(Array)
   %>  <%= key %> = <%= value %><%
