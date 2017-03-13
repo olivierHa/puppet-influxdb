@@ -4,7 +4,7 @@ class influxdb::install
 {
 	$packages = [
 		'influxdb',
-		'influxdb-client'
+		'influxdb-client',
 	]
 
   package { $packages :
