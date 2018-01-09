@@ -29,7 +29,7 @@ commands :influx_cli => '/usr/bin/influx'
       end
       policies = output.split("\n")[1..-1]
       policies.each do |policy|
-        ret_name , duration , replica, is_default = policy.split("\t").reject { |e| e.to_s.empty? }
+        ret_name , duration , replica, is_default = policy.split(/\s+/).reject { |e| e.to_s.empty? }
         dur_s = self.duration_to_s(duration)
         instances << new(
            :name        => "#{ret_name}@#{db}",
