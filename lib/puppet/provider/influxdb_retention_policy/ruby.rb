@@ -70,7 +70,7 @@ commands :influx_cli => '/usr/bin/influx'
     end
     short_ret_name = "#{resource[:name]}".split('@').first
     if @property_flush[:ensure] == :present
-      if resource[:is_default]
+      if resource[:is_default] == 'true'
         influx_cli(['-execute', "create RETENTION POLICY \"#{short_ret_name}\" ON #{resource[:database]} DURATION #{resource[:duration]} REPLICATION #{resource[:replication]} DEFAULT"].compact)
       else
         influx_cli(['-execute', "create RETENTION POLICY \"#{short_ret_name}\" ON #{resource[:database]} DURATION #{resource[:duration]} REPLICATION #{resource[:replication]}"].compact)
