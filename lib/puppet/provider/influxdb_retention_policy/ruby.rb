@@ -12,6 +12,8 @@ commands :influx_cli => '/usr/bin/influx'
 
   def self.instances
     instances = []
+    influx_major_version = self.influx_major_version
+
     begin
       dbs = influx_cli(['-execute', 'show databases'])
     rescue Puppet::ExecutionFailure => e
@@ -29,7 +31,15 @@ commands :influx_cli => '/usr/bin/influx'
       end
       policies = output.split("\n")[1..-1]
       policies.each do |policy|
-        ret_name , duration , replica, is_default = policy.split("\t").reject { |e| e.to_s.empty? }
+        if (influx_major_version < 1)
+          ret_name , duration , replica, is_default = policy.split("\t").reject { |e| e.to_s.empty? }
+        else
+          ret_name , duration , shardGroupDuration, replica, is_default = policy.split(/\s+/).reject { |e| e.to_s.empty? }
+        end
+        if ret_name.nil? || duration.nil?
+          Puppet.debug("failed to parse policy name and duration from #{policy}")
+          next
+        end
         dur_s = self.duration_to_s(duration)
         instances << new(
            :name        => "#{ret_name}@#{db}",
@@ -60,7 +70,7 @@ commands :influx_cli => '/usr/bin/influx'
     end
     short_ret_name = "#{resource[:name]}".split('@').first
     if @property_flush[:ensure] == :present
-      if resource[:is_default]
+      if resource[:is_default] == 'true'
         influx_cli(['-execute', "create RETENTION POLICY \"#{short_ret_name}\" ON #{resource[:database]} DURATION #{resource[:duration]} REPLICATION #{resource[:replication]} DEFAULT"].compact)
       else
         influx_cli(['-execute', "create RETENTION POLICY \"#{short_ret_name}\" ON #{resource[:database]} DURATION #{resource[:duration]} REPLICATION #{resource[:replication]}"].compact)
@@ -119,6 +129,17 @@ commands :influx_cli => '/usr/bin/influx'
     if is_default.to_s == 'true'
       @property_flush[:is_default] = is_default
     end
+  end
+
+  def self.influx_major_version
+    begin
+      version_string = influx_cli(['-version'])
+      major_version = /.*(\d)\.\d\.\d/.match(version_string)[1].to_i
+    rescue Puppet::ExecutionFailure => e
+      Puppet.debug("#error trying to discover influx version, will assume 0.x -> #{e.inspect}")
+      return 0
+    end
+    return major_version
   end
 
 end
