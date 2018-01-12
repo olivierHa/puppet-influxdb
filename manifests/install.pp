@@ -2,8 +2,12 @@
 #
 class influxdb::install
 {
+	$packages = [
+		'influxdb',
+		'influxdb-client',
+	]
 
-  package {'influxdb':
+  package { $packages :
     ensure   => $::influxdb::package_ensure,
   }
 
