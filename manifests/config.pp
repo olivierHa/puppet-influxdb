@@ -2,8 +2,7 @@
 #
 # This class is called from influxdb
 #
-class influxdb::config (
-) {
+class influxdb::config {
 
   $main_section = merge($::influxdb::params::main, $::influxdb::main)
   $meta_section = merge($::influxdb::params::meta, $::influxdb::meta)
