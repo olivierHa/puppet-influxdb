@@ -5,11 +5,6 @@
 #
 class influxdb::params {
 
-  $manage_repo   = true
-  $influxdb_user = 'influxdb'
-  $influxdb_group = 'influxdb'
-  $package_ensure = 'present'
-
   case $::osfamily {
     'Debian': {
       $package_provider = 'dpkg'
@@ -41,12 +36,6 @@ class influxdb::params {
     }
   }
 
-  # Configuration options
-  $config_file = '/etc/influxdb/influxdb.conf'
-  $conf_template = 'influxdb/influxdb.conf.erb'
-
-  $ignore_default_graphite = false
-  
   # Main Section
   $main = {
     reporting-disabled => false,
@@ -217,4 +206,3 @@ class influxdb::params {
   }
 
 }
-

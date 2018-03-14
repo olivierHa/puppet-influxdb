@@ -29,16 +29,16 @@ class influxdb::repo (
         ensure_resource('package', 'apt-transport-https', {'ensure' => 'present' })
 
         apt::key { 'influxdb':
-          key         => '05CE15085FC09D18E99EFB22684A14CF2582E0C5',
-          key_content => template('influxdb/aptkey.erb'),
+          id      => '05CE15085FC09D18E99EFB22684A14CF2582E0C5',
+          content => template('influxdb/aptkey.erb'),
         }
 
         apt::source { 'influxdb':
-          location    => 'https://repos.influxdata.com/debian',
-          release     => $::lsbdistcodename,
-          repos       => $influxdb_flavour,
-          include_src => false,
-          require     => Apt::Key['influxdb'],
+          location => 'https://repos.influxdata.com/debian',
+          release  => $::lsbdistcodename,
+          repos    => $influxdb_flavour,
+          include  => { 'src' => false },
+          require  => Apt::Key['influxdb'],
         }
       }
       default: {

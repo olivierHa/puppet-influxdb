@@ -46,50 +46,39 @@
 #
 class influxdb (
   # Installation parameters
-  $package_ensure                 = $influxdb::params::package_ensure,
-  $manage_repo                    = $influxdb::params::manage_repo,
-  $config_file                    = $influxdb::params::config_file,
-  $influxdb_user                  = $influxdb::params::influxdb_user,
-  $influxdb_group                 = $influxdb::params::influxdb_group,
-  $conf_template                  = $influxdb::params::conf_template,
-  $ignore_default_graphite        = $influxdb::params::ignore_default_graphite,
+  String $package_ensure                      = 'present',
+  Boolean $manage_repo                        = true,
+  String $config_file                         = '/etc/influxdb/influxdb.conf',
+  String $influxdb_user                       = 'influxdb',
+  String $influxdb_group                      = 'influxdb',
+  String $conf_template                       = 'influxdb/influxdb.conf.erb',
+  Boolean $ignore_default_graphite            = false,
+  # Service management
+  String $service_name                        = 'influxdb',
+  Boolean $service_enable                     = true,
+  Enum['stopped', 'running'] $service_ensure  = 'running',
+  Boolean $service_manage                     = true,
   # Custom configuration parameters
-  $main                   = {},
-  $meta                   = {},
-  $data                   = {},
-  $cluster                = {},
-  $retention              = {},
-  $http                   = {},
-  $admin                  = {},
-  $graphite               = {},
-  $hh                     = {},
-  $continuous_queries     = {},
-  $monitor                = {},
-  $collectd               = {},
-  $opentsdb               = {},
-  $udp                    = {},
-  $shard_precreation      = {},
-  $snapshot               = {},
-  $subscriber             = {},
+  Hash $main                                  = {},
+  Hash $meta                                  = {},
+  Hash $data                                  = {},
+  Hash $cluster                               = {},
+  Hash $retention                             = {},
+  Hash $http                                  = {},
+  Hash $admin                                 = {},
+  Hash $graphite                              = {},
+  Hash $hh                                    = {},
+  Hash $continuous_queries                    = {},
+  Hash $monitor                               = {},
+  Hash $collectd                              = {},
+  Hash $opentsdb                              = {},
+  Hash $udp                                   = {},
+  Hash $shard_precreation                     = {},
+  Hash $snapshot                              = {},
+  Hash $subscriber                            = {},
+  Hash $databases                             = {},
+  Hash $retention_policies                    = {},
 ) inherits ::influxdb::params {
-
-  # validate parameters
-  validate_hash($main)
-  validate_hash($meta)
-  validate_hash($data)
-  validate_hash($cluster)
-  validate_hash($retention)
-  validate_hash($http)
-  validate_hash($admin)
-  validate_hash($graphite)
-  validate_hash($hh)
-  validate_hash($continuous_queries)
-  validate_hash($monitor)
-  validate_hash($collectd)
-  validate_hash($opentsdb)
-  validate_hash($udp)
-  validate_hash($shard_precreation)
-  validate_hash($snapshot)
 
   if $manage_repo {
     class { '::influxdb::repo': }
@@ -98,4 +87,7 @@ class influxdb (
   class { '::influxdb::config': } ~>
   class { '::influxdb::service': } ->
   Class['::influxdb']
+
+  create_resources(influxdb_database, $databases)
+  create_resources(influxdb_retention_policy, $retention_policies)
 }
