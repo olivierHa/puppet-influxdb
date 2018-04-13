@@ -13,7 +13,12 @@ class influxdb::install {
     }
   }
 
-  package { $packages :
-    ensure   => $::influxdb::package_ensure,
+  if $::influxdb::manage_repo {
+	ensure_packages($packages, {
+	  ensure    => $::influxdb::package_ensure,
+	  require   => Class['::influxdb::repo'],
+	})
+  } else {
+    ensure_packages($packages, {ensure => $::influxdb::package_ensure})
   }
 }
