@@ -88,6 +88,10 @@ class influxdb (
   class { '::influxdb::service': } ->
   Class['::influxdb']
 
+  if $manage_repo {
+    Class['::influxdb::repo'] -> Class['::influxdb::install']
+  }
+
   create_resources(influxdb_database, $databases)
   create_resources(influxdb_retention_policy, $retention_policies)
 }
