@@ -24,7 +24,7 @@ commands :influx_cli => '/usr/bin/influx'
 
     databases.collect do |db|
       begin
-        output = influx_cli(['-execute', "show retention policies on #{db}"].compact)
+        output = influx_cli(['-execute', "show retention policies on \"#{db}\""].compact)
       rescue Puppet::ExecutionFailure => e
         Puppet.debug("#show retention policies had an error -> #{e.inspect}")
         return nil
@@ -65,19 +65,19 @@ commands :influx_cli => '/usr/bin/influx'
 
   def flush
     if @property_flush[:ensure] == :absent
-        influx_cli(['-execute', "drop RETENTION POLICY #{resource[:name]} ON #{resource[:database]}"].compact)
+        influx_cli(['-execute', "drop RETENTION POLICY \"#{resource[:name]}\" ON \"#{resource[:database]}\""].compact)
         return
     end
     short_ret_name = "#{resource[:name]}".split('@').first
     if @property_flush[:ensure] == :present
       if resource[:is_default] == 'true'
-        influx_cli(['-execute', "create RETENTION POLICY \"#{short_ret_name}\" ON #{resource[:database]} DURATION #{resource[:duration]} REPLICATION #{resource[:replication]} DEFAULT"].compact)
+        influx_cli(['-execute', "create RETENTION POLICY \"#{short_ret_name}\" ON \"#{resource[:database]}\" DURATION #{resource[:duration]} REPLICATION #{resource[:replication]} DEFAULT"].compact)
       else
-        influx_cli(['-execute', "create RETENTION POLICY \"#{short_ret_name}\" ON #{resource[:database]} DURATION #{resource[:duration]} REPLICATION #{resource[:replication]}"].compact)
+        influx_cli(['-execute', "create RETENTION POLICY \"#{short_ret_name}\" ON \"#{resource[:database]}\" DURATION #{resource[:duration]} REPLICATION #{resource[:replication]}"].compact)
       end
       return
     end
-    cmd_arguments = "ALTER RETENTION POLICY \"#{short_ret_name}\" ON #{resource[:database]} "
+    cmd_arguments = "ALTER RETENTION POLICY \"#{short_ret_name}\" ON \"#{resource[:database]}\" "
     if @property_flush and ! @property_flush.empty?
       cmd_arguments << ' DURATION ' << @property_flush[:duration] if @property_flush[:duration]
       cmd_arguments << ' REPLICATION ' << @property_flush[:replication] if @property_flush[:replication]
